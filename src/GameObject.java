@@ -18,7 +18,6 @@ boolean alive;
 int rations;
 int hunger;
 String name;
-ArrayList<Enemy> aliens = new ArrayList<Enemy>();
 int enemyHealth;
 
 

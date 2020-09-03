@@ -229,7 +229,7 @@ JButton map = new JButton("Map");
 						JOptionPane.showInputDialog("Inflitrate the goblins hideout to kill thier leader    Reward: 40");
 					}
 					if(i ==2){
-						JOptionPane.showInputDialog("Negotiate peace with Orcs    Reward: 70");
+						JOptionPane.showInputDialog("Kill 4 Orcs    Reward: 70");
 					}
 				
 				}	  
@@ -240,10 +240,10 @@ JButton map = new JButton("Map");
 						
 					}
 					if(i ==1){
-						JOptionPane.showInputDialog("Inflitrate the goblins hideout and there gold plated statue   Reward: 4");
+						JOptionPane.showInputDialog("Kill 10 Goblins Reward: 6");
 					}
 					if(i ==2){
-						JOptionPane.showInputDialog("Negotiate a war alliance with the neighboring town    Reward: 7");
+						JOptionPane.showInputDialog(" kill 1 Orc Reward: 7");
 					}
 				
 				}	  
@@ -254,10 +254,10 @@ JButton map = new JButton("Map");
 						
 					}
 					if(i ==1){
-						JOptionPane.showInputDialog("Inflitrate the goblins hideout and find out there plans    Reward: 2");
+						JOptionPane.showInputDialog("Kill 1 elf   Reward: 2");
 					}
 					if(i ==2){
-						JOptionPane.showInputDialog("Negotiate trade deal with the elves   Reward: 3");
+						JOptionPane.showInputDialog("Kill two humans   Reward: 3");
 					}
 				
 				}	   

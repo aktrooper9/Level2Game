@@ -23,7 +23,7 @@ void round(GameObject g){
 	g.health-=damage;
 	System.out.println("You took "+damage+" damage, you have "+g.health+" Left");
 	g.damage-=prot;
-	System.out.println("You dealt "+g.damage+" damage, Embe has "+health+" Left");
+	System.out.println("You dealt "+g.damage+" damage, Ember has "+health+" Left");
 	enemyHealth-=g.damage;
 }
 }

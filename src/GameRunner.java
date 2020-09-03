@@ -19,6 +19,7 @@ void setup(){
 	frame.setSize(WIDTH, HEIGHT);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.add(panel);
+	//frame.addKeyListener(panel);
 
 }
 }

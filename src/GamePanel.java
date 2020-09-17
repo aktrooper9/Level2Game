@@ -29,8 +29,6 @@ public class GamePanel extends JPanel implements ActionListener{
     JButton town = new JButton("Town");
     JButton dark = new JButton("Dark Forest :Orcs: ");
     JButton goblins= new JButton("The Goblin Hideout");
-    JButton humans = new JButton("Human Settlement");
-    JButton elves = new JButton("Elven Highlands");
 JButton map = new JButton("Map");
 
     String creature;
@@ -44,8 +42,7 @@ JButton map = new JButton("Map");
     	dark.addActionListener(this);
     	town.addActionListener(this);
     	goblins.addActionListener(this);
-    	elves.addActionListener(this);
-    	humans.addActionListener(this);
+    	
 		//framedraw = new Timer(1000 / 60, this);
     	 add(play);
     	 add(store);
@@ -54,8 +51,7 @@ JButton map = new JButton("Map");
     	 add(town);
     	 add(dark);
     	 add(goblins);
-    	 add(elves);
-    	 add(humans);
+    	
  		//framedraw.start();
 
     }
@@ -72,7 +68,7 @@ JButton map = new JButton("Map");
 	        drawGameState(g);
 	    }
     else if(currentState == MAP){
-        draMapState(g);
+        drawMapState(g);
     }else if(currentState == END){
 	        drawEndState(g);
 	    }
@@ -105,8 +101,7 @@ JButton map = new JButton("Map");
 		 town.setVisible(false);
 		 dark.setVisible(false);
 		 goblins.setVisible(false);
-		 humans.setVisible(false);
-		 elves.setVisible(false);
+		
 		 map.setVisible(false);
 
 	 }
@@ -119,19 +114,20 @@ JButton map = new JButton("Map");
 		 play.setVisible(false);
 		
 	 } void drawGameState(Graphics g) { 
+		 map.setVisible(true);
+		 quests.setVisible(true);
+		 store.setVisible(true);
 		 g.setColor(Color.GREEN);
 		 g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 		
 
-		 map.setVisible(true);
-		 quests.setVisible(true);
-		 store.setVisible(true);
+	
 		 //System.out.println("HI");
-		
+	repaint();
 	 }	 void drawEndState(Graphics g)  {  
 		// System.out.println("end");
 		 
-	 }  void draMapState(Graphics g) { 
+	 }  void drawMapState(Graphics g) { 
 		 g.setColor(Color.GREEN);
 		 g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 
@@ -141,37 +137,38 @@ JButton map = new JButton("Map");
 		 town.setVisible(true);
 		 dark.setVisible(true);
 		 goblins.setVisible(true);
-		 humans.setVisible(true);
-		 elves.setVisible(true);
-
 		 //System.out.println("HI");
-		
+		repaint();
 	 }	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		repaint();
+	//	repaint();
 		
 		JButton buttonPressed = (JButton) e.getSource();
 		 if (buttonPressed.equals(play)){
 			 
-			 currentState++;
+			 //currentState++;
 			 boolean success = false;
 			 while(!success){
+				
 			 creature = JOptionPane.showInputDialog("Choose  orcs, elves, and dragonborns,");
 				if(creature.equalsIgnoreCase("orc")||creature.equalsIgnoreCase("orcs")){
 					player = new Orc();
 					success = true;
+					player.alive=true;
 				}
 				else if(creature.equalsIgnoreCase("elf")||creature.equalsIgnoreCase("elves")){
 					player = new Elf();
 					success = true;
+					player.alive=true;
 
 				}
 				else if (creature.equalsIgnoreCase("dragonborn")||creature.equalsIgnoreCase("dragonborns")){
 					player = new DragonBorn();
 					success = true;
+					player.alive=true;
 
 				}
 				else{
@@ -182,7 +179,7 @@ JButton map = new JButton("Map");
 				JOptionPane.showMessageDialog(null, "Damage: "+player.damage+"\nArmor: "+player.prot+"\nSpeed: "+player.speed+"\nhealth:"+player.health+"\nConstitution "+player.dps+"\nHunger: "+player.hunger);
 				player.name = JOptionPane.showInputDialog("Choose a name");
 				JOptionPane.showMessageDialog(null, "You are "+player.name+" of the "+creature);
-				currentState++;
+				currentState=GAME;
 		 }
 		 if (buttonPressed.equals(store)){
 			 int task = JOptionPane.showOptionDialog(null, "What would you like to buy", "Shop", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Broad Sword","Great Club","Claymore" , "shield","Armor", "Quit"}, null);
@@ -218,57 +215,36 @@ JButton map = new JButton("Map");
 		 }
 		 if (buttonPressed.equals(quests)){
 			 Random ran = new Random();
-			 int task = JOptionPane.showOptionDialog(null, "Choose a Quest", "Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Hard","Medium","Easy" , "Quit"}, null);
+			 int task = JOptionPane.showOptionDialog(null, "Choose a Quest", "Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Kill Ember (EXTRA HARD)","Kill 10 goblins","kill 4 orcs ","Kill a goblin Hyrda",  "Quit"}, null);
 			 if( task == 0){
-					int i = ran.nextInt(3);
-					if(i ==0){
-						JOptionPane.showInputDialog("Kill the dragon Ember at his lair  Warning: EXTRA HARD  Reward: 500 gold");
+					
+					if(task ==0){
+						JOptionPane.showInputDialog(" Go to dark forest , than kill the dragon Ember at his lair  Warning: EXTRA HARD  Reward: 500 gold");
 						
 					}
-					if(i ==1){
-						JOptionPane.showInputDialog("Inflitrate the goblins hideout to kill thier leader    Reward: 40");
+					if(task ==1){
+						JOptionPane.showInputDialog("Go to the goblin hideout and kill 10 Goblins    Reward: 40");
 					}
-					if(i ==2){
-						JOptionPane.showInputDialog("Kill 4 Orcs    Reward: 70");
+					if(task ==2){
+						JOptionPane.showInputDialog("go to the dark forest and kill 4 Orcs    Reward: 70");
 					}
 				
 				}	  
-			 if( task == 1){
-					int i = ran.nextInt(3);
-					if(i ==0){
-						JOptionPane.showInputDialog("Kill the hydra  Reward: 5 gold");
+			
+					
+					if(task ==3 ){
+						JOptionPane.showInputDialog("go to the goblin hidout and kill a hydra  Reward: 5 gold");
 						
 					}
-					if(i ==1){
-						JOptionPane.showInputDialog("Kill 10 Goblins Reward: 6");
-					}
-					if(i ==2){
-						JOptionPane.showInputDialog(" kill 1 Orc Reward: 7");
-					}
-				
-				}	  
-			 if( task == 2){
-					int i = ran.nextInt(3);
-					if(i ==0){
-						JOptionPane.showInputDialog("kill monsters that stalk the forest   Reward: 1 head = 1 gold");
-						
-					}
-					if(i ==1){
-						JOptionPane.showInputDialog("Kill 1 elf   Reward: 2");
-					}
-					if(i ==2){
-						JOptionPane.showInputDialog("Kill two humans   Reward: 3");
-					}
-				
-				}	   
 		 }
+		
 		 if (buttonPressed.equals(town)){
 			 player.location = 0;
 			 town.setVisible(false);
 			 dark.setVisible(false);
 			 goblins.setVisible(false);
-			 humans.setVisible(false);
-			 elves.setVisible(false);
+			 map.setVisible(true);
+		
 		 }
 		 if (buttonPressed.equals(dark)){
 			 player.location = 1;
@@ -276,8 +252,8 @@ JButton map = new JButton("Map");
 			 town.setVisible(false);
 			 dark.setVisible(false);
 			 goblins.setVisible(false);
-			 humans.setVisible(false);
-			 elves.setVisible(false);
+			 map.setVisible(true);
+
 		 }
 		 if (buttonPressed.equals(goblins)){
 			 player.location = 2;
@@ -285,32 +261,23 @@ JButton map = new JButton("Map");
 			 town.setVisible(false);
 			 dark.setVisible(false);
 			 goblins.setVisible(false);
-			 humans.setVisible(false);
-			 elves.setVisible(false);
+			 map.setVisible(true);
+
 		 }
-		 if (buttonPressed.equals(humans)){
-			 player.location = 3;
-			 town.setVisible(false);
-			 dark.setVisible(false);
-			 goblins.setVisible(false);
-			 humans.setVisible(false);
-			 elves.setVisible(false);
-		 }
-		 if (buttonPressed.equals(elves)){
-			 player.location = 4;
-			 town.setVisible(false);
-			 dark.setVisible(false);
-			 goblins.setVisible(false);
-			 humans.setVisible(false);
-			 elves.setVisible(false);
-		 }
+	
+		 
+		
+		
+
+		 
+		
+		
+		 
 		 else if(buttonPressed.equals(map)){
 			 currentState = MAP;
 		 }
-
-		 
-		 repaint();
-		
-	}
+			 repaint();
+		 }
+	
 }
 

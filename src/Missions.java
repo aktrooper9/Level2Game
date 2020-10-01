@@ -11,7 +11,6 @@ public class Missions extends GameObject{
 Missions(GameObject g){
 }
 	void killEmber(GameObject g){
-	JOptionPane.showMessageDialog(null, "Travel to the Dark Woods");
 	if(g.location ==1 ){
 		 int task = JOptionPane.showOptionDialog(null, "Where do you want to go", "Dark Forest", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{"Ember","Orcs" }, null);
 		 if( task == DRAGON){
@@ -20,8 +19,27 @@ Missions(GameObject g){
 			fight.draw();
 			fight.alive = true;
 				while(fight.alive){
-				 fight.round(g);				// System.out.println("Working");'
-				 
+				 fight.round(g);
+					if(g.health==0||g.health<0){
+						g.alive = false;
+						 break;
+					}
+					else if(enemyHealth==0||enemyHealth<0){
+						alive = false;
+						 int mercy = JOptionPane.showOptionDialog(null, "Do you wish to spare Ember", "Dark Forest", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{"Spare","Kill" }, null);
+						 if(mercy ==0){	
+							 JOptionPane.showMessageDialog(null, "Ember spreads his wings incinerates you. He whispers I will not be killed by the likes of you. ");
+						 break;
+						 }
+						 else{
+							 JOptionPane.showMessageDialog(null, "The great dragons body lies motionless. His gold is now yours.");
+						g.money+=10000;
+						 }
+					}
+				 // System.out.println("Working");'
+				 if(g.alive==false){
+					 break;
+				 }
 				}
 				 
 			
@@ -29,29 +47,36 @@ Missions(GameObject g){
 			
 	}
 		 if(task == ORCS){
-
+//System.out.println("Working");
 				for(int i =0;orcs.length>i;i++){
 					orcs[i]= new Enemy();
 					orcs[i].draw();
 				}
-				while(alive){
+				while(g.alive){
 					for(int i =0;orcs.length>i;i++){
-						orcs[i]= new Enemy();
-					
 					orcs[i].round(g);
-					orcs[i].update();
+						if(g.health==0||g.health<0){
+							g.alive = false;
+							 break;
+						}
+						else if(enemyHealth==0||enemyHealth<0){
+							alive = false;
+							 int mercy = JOptionPane.showOptionDialog(null, "Do you wish to spare the orc", "Dark Forest", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{"Spare","Kill" }, null);
+							 if(mercy ==0){	
+								 JOptionPane.showMessageDialog(null, "The orc runs off afraid and dishonered ");
+							 break;
+							 }
+							
+							
+							 }
+					}
+					
 					}
 					}
-				if(!alive){
-					JOptionPane.showMessageDialog(null,"You Win");
-					}	
-					else if(alive){
-						JOptionPane.showMessageDialog(null,"You Lose");
-						}	
-			
+		
 		 }
 }
-}
+
 	void goblin(GameObject g){
 		JOptionPane.showMessageDialog(null,"Travel to the goblins");
 		if(g.location==2){
@@ -66,8 +91,30 @@ Missions(GameObject g){
 		hydra.health= 200;
 		hydra.damage= 100;
 		while(alive){
-		hydra.round(g);
-		hydra.update();
+
+			 hydra.round(g);
+			 hydra.damage*=3;
+				if(g.health==0||g.health<0){
+					g.alive = false;
+					 break;
+				}
+				else if(enemyHealth==0||enemyHealth<0){
+					alive = false;
+					 int mercy = JOptionPane.showOptionDialog(null, "Do you wish to spare The hydra of the Goblins", "Lair", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{"Spare","Kill" }, null);
+					 if(mercy ==0){	
+						 JOptionPane.showMessageDialog(null, "Its heads look confused before retreating back into the swamp ");
+					 break;
+					 }
+					 else{
+						 JOptionPane.showMessageDialog(null, "The hydras's blood spills over you. The middle head gives a half hearted smile, as the poison in its blood finshes you.");
+					g.alive = false;
+					 }
+				}
+			 // System.out.println("Working");'
+			 if(g.alive==false){
+				 break;
+			 }
+			
 		}
 		if(!alive){
 			JOptionPane.showMessageDialog(null,"You Win");

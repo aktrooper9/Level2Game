@@ -9,8 +9,8 @@ public class Enemy extends GameObject{
 	}
 	void draw(){
 		Random ran = new Random();
-		enemyHealth = ran.nextInt(30-100);
-		damage = ran.nextInt(30-500);
+		enemyHealth = ran.nextInt(70)+30;
+		damage = ran.nextInt(70)+30;
 		alive = true;
 	}
 	
@@ -24,12 +24,14 @@ public class Enemy extends GameObject{
 	void round(GameObject g){
 		
 int characterdamage = g.damage;
-int emberdamage = damage;
+int gruntdamage = damage;
 		while(alive){
 		damage-=g.prot;
 		g.health-=damage;
 		System.out.println("You took "+damage+" damage, you have "+g.health+" Left");
-		damage = emberdamage;
+		damage = gruntdamage;
+		damage-=g.prot;
+
 		 int task = JOptionPane.showOptionDialog(null, "Choose your move", "BATTLE", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Big Hit (50% percent chance of missing)", "Strike (100% chance of hitting)"}, null);
 		if(task == 0){
 			Random ran = new Random();
@@ -41,7 +43,7 @@ int emberdamage = damage;
 				g.damage=g.damage*2;
 				 g.damage-=prot;
 				 health-=g.damage;
-					System.out.println("You dealt "+g.damage+" damage, Ember has "+health+" Health Left");
+					System.out.println("You dealt "+g.damage+" damage, orc has "+health+" Health Left");
 					 g.damage= characterdamage;
 			}
 		}
@@ -52,17 +54,13 @@ int emberdamage = damage;
 			g.damage = 0;
 		}
 		
-		System.out.println("You dealt "+g.damage+" damage, the Ember has "+health+" Health Left");
+		System.out.println("You dealt "+g.damage+" damage, the orc has "+health+" Health Left");
 		g.damage = characterdamage;
 		}
-		health-=damage;
 		if(health==0||health<0){
 			alive = false;
 		}
-		
-		
-		}
 		}
 }
-	
+}	
 

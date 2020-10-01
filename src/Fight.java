@@ -16,6 +16,7 @@ void draw(){
 void update(GameObject g){
 	if(g.health==0||g.health<0){
 		g.alive = false;
+		 
 	}
 	else if(enemyHealth==0||enemyHealth<0){
 		alive = false;

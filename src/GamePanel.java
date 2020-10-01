@@ -146,6 +146,8 @@ JButton map = new JButton("Map");
 		// TODO Auto-generated method stub
 	//	repaint();
 		
+		
+		
 		JButton buttonPressed = (JButton) e.getSource();
 		 if (buttonPressed.equals(play)){
 			 
@@ -215,7 +217,7 @@ JButton map = new JButton("Map");
 		 }
 		 if (buttonPressed.equals(quests)){
 			 Random ran = new Random();
-			 int task = JOptionPane.showOptionDialog(null, "Choose a Quest", "Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Kill Ember (EXTRA HARD)","Kill 10 goblins","kill 4 orcs ","Kill a goblin Hyrda",  "Quit"}, null);
+			 int task = JOptionPane.showOptionDialog(null, "View a Quest", "Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Kill Ember (EXTRA HARD)","Kill 10 goblins","kill 4 orcs ","Kill a goblin Hyrda",  "Quit"}, null);
 			 if( task == 0){
 					
 					if(task ==0){
@@ -276,7 +278,11 @@ JButton map = new JButton("Map");
 		 else if(buttonPressed.equals(map)){
 			 currentState = MAP;
 		 }
-			 repaint();
+		if(!player.alive){
+			JOptionPane.showMessageDialog(null, "You lose");
+		currentState = 0;
+		}	 
+		 repaint();
 		 }
 	
 }

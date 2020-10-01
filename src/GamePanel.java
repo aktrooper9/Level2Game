@@ -193,11 +193,11 @@ JButton map = new JButton("Map");
 			new GreatClub(player);
 		//	System.out.println(player.damage);
 		}	  
-		else if( task == 3){
+		else if( task == 2){
 			new Claymore(player);
 		//	System.out.println(player.damage);
 		}	  
-		else if( task == 4){
+		else if( task == 3){
 			new Shield(player);
 		//	System.out.println(player.damage);
 		}	  
@@ -259,7 +259,7 @@ JButton map = new JButton("Map");
 		 }
 		 if (buttonPressed.equals(goblins)){
 			 player.location = 2;
-			 
+			 m.goblin(player);
 			 town.setVisible(false);
 			 dark.setVisible(false);
 			 goblins.setVisible(false);

@@ -63,7 +63,7 @@ public class Missions extends GameObject {
 				}
 				while (g.alive) {
 					for (int i = 0; orcs.length > i; i++) {
-						orcs[i].round(g);
+						orcs[i].round(g, "Orc");
 						if (g.health == 0 || g.health < 0) {
 							g.alive = false;
 							break;
@@ -105,9 +105,9 @@ public class Missions extends GameObject {
 					goblins[i] = new Enemy();
 					goblins[i].draw();
 				}
-				while (g.alive) {
+				while (hydra.alive) {
 					for (int i = 0; goblins.length > i; i++) {
-						goblins[i].round(g);
+						goblins[i].round(g, "Goblin");
 						if (g.health == 0 || g.health < 0) {
 							g.alive = false;
 							break;
@@ -132,50 +132,43 @@ public class Missions extends GameObject {
 				}
 
 			}
-if(task == HYDRA){
+			if (task == HYDRA) {
 
+				// System.out.println("Working");
 
-	// System.out.println("Working");
-	
-		hydra = new Enemy();
-		hydra.draw();
-	hydra.health = 600;
-	hydra.damage = 50;
-	while (g.alive) {
-			hydra.round(g);
-			//g.health-= 30;
-			if (g.health == 0 || g.health < 0) {
-				g.alive = false;
-				break;
-			} else if (hydra.health == 0
-					|| hydra.health < 0) {
-				alive = false;
-				int mercy = JOptionPane.showOptionDialog(null,
-						"Do you wish to spare the goblin",
-						"Dark Forest", 0,
-						JOptionPane.INFORMATION_MESSAGE, null,
-						new String[] { "Spare", "Kill" }, null);
-				if (mercy == 0) {
-					JOptionPane
-							.showMessageDialog(null,
-									"The Hydra slithers off annoyed");
-					break;
+				hydra = new Enemy();
+				hydra.draw();
+				hydra.health = 600;
+				hydra.damage = 50;
+				while (hydra.alive) {
+
+					hydra.round(g, "Hydra");
+					// g.health-= 30;
+					if(!g.alive){
+						break;
+					}
+					
+					
+					int mercy = JOptionPane.showOptionDialog(null,
+							"Do you wish to spare the hydra", "Dark Forest", 0,
+							JOptionPane.INFORMATION_MESSAGE, null,
+							new String[] { "Spare", "Kill" }, null);
+					if (mercy == 0) {
+						JOptionPane.showMessageDialog(null,
+								"The Hydra slithers off annoyed");
+						break;
+					} else if (mercy == 1) {
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"The Heads laughs cruely as its poisonous blood spills, killing you. The hydra smiles knowing it will live...                                                             when you restart.");
+						break;
+					}
+
 				}
-				else if(mercy==1){
-					JOptionPane
-					.showMessageDialog(null,
-							"The Heads laughs cruely as its poisonous blood spills, killing you. The hydra smiles knowing it will live...                                                             when you restart.");
-			break;
-				}
+				
+			}
 
-			
-		}
-		break;
-	}
-
-
-}
 		}
 	}
-
 }

@@ -20,7 +20,14 @@ int hunger;
 String name;
 int enemyHealth;
 
-
+void doDamage(int damage){
+	System.out.println("Damage "+damage);
+	this.health-=damage;
+	if(health<=0){
+		System.out.println("Dead");
+		alive=false;
+	}
+}
 
 
 }

@@ -14,13 +14,6 @@ void draw(){
 	alive = true;
 }
 void update(GameObject g){
-	if(g.health==0||g.health<0){
-		g.alive = false;
-		 
-	}
-	else if(enemyHealth==0||enemyHealth<0){
-		alive = false;
-	}
 }
 
 void round(GameObject g){
@@ -28,7 +21,7 @@ void round(GameObject g){
 	int emberdamage = damage;
 
 	damage-=g.prot;
-	g.health-=damage;
+	g.doDamage(damage );
 	System.out.println("You took "+damage+" damage, you have "+g.health+" Left");
 	damage = emberdamage;
 	 int task = JOptionPane.showOptionDialog(null, "Choose your move", "BATTLE", 0, JOptionPane.INFORMATION_MESSAGE, null,new String[]{ "Big Hit (50% percent chance of missing)", "Strike (100% chance of hitting)"}, null);
@@ -41,7 +34,7 @@ void round(GameObject g){
 			}
 			g.damage=g.damage*2;
 			 g.damage-=prot;
-			 health-=g.damage;
+			 doDamage(g.damage);
 				System.out.println("You dealt "+g.damage+" damage, Ember has "+health+" Health Left");
 				 g.damage= characterdamage;
 		}
@@ -55,9 +48,6 @@ void round(GameObject g){
 	
 	System.out.println("You dealt "+g.damage+" damage, the Ember has "+health+" Health Left");
 	g.damage = characterdamage;
-	}
-	if(health==0||health<0){
-		alive = false;
 	}
 	
 	

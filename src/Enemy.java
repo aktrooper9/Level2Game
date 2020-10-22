@@ -33,11 +33,11 @@ public class Enemy extends GameObject {
 			damage = gruntdamage;
 			damage -= g.prot;
 
-			int task = JOptionPane.showOptionDialog(null, "Choose your move",
+			int move = JOptionPane.showOptionDialog(null, "Choose your move",
 					"BATTLE", 0, JOptionPane.INFORMATION_MESSAGE, null,
 					new String[] { "Big Hit (50% percent chance of missing)",
-							"Strike (100% chance of hitting)" }, null);
-			if (task == 0) {
+							"Strike (100% chance of hitting)", "heal " }, null);
+			if (move == 0) {
 				Random ran = new Random();
 				int i = ran.nextInt(2);
 				if (i == 1) {
@@ -52,16 +52,25 @@ public class Enemy extends GameObject {
 					g.damage = characterdamage;
 				}
 			}
-			if (task == 1) {
+			if (move == 1) {
 
 				g.damage -= prot;
 				if (g.damage < 0) {
 					g.damage = 0;
 				}
-
+doDamage(g.damage);
 				System.out.println("You dealt " + g.damage + " damage, the "
 						+ Creature + " has " + health + " Health Left");
 				g.damage = characterdamage;
+			}
+			if(move==2){
+				if(g.rations<=0){
+					JOptionPane.showMessageDialog(null, "No food left");
+				}
+				g.health+=50;
+				g.rations-=1;
+				JOptionPane.showMessageDialog(null, "You grab a wuick bite while dodging attacks.. You now have "+g.health+" health");
+
 			}
 		}
 

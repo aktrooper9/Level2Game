@@ -4,6 +4,8 @@ public class Missions extends GameObject {
 	Enemy[] goblins = new Enemy[10];
 	Enemy[] orcs = new Enemy[5];
 	Enemy hydra = new Enemy();
+	Enemy ember = new Enemy();
+	Enemy ember2 = new Enemy();
 
 	final int GOBlINS = 0;
 	final int HYDRA = 1;
@@ -15,47 +17,90 @@ public class Missions extends GameObject {
 
 	void killEmber(GameObject g) {
 		if (g.location == 1) {
-			int task = JOptionPane.showOptionDialog(null,
+			int Darkforestplace = JOptionPane.showOptionDialog(null,
 					"Where do you want to go", "Dark Forest", 0,
 					JOptionPane.INFORMATION_MESSAGE, null, new String[] {
 							"Ember", "Orcs" }, null);
-			if (task == DRAGON) {
-				Fight fight = new Fight();
-				// System.out.println("here");
-				fight.draw();
-				fight.alive = true;
-				while (fight.alive) {
-					fight.round(g);
-					if (g.health == 0 || g.health < 0) {
-						g.alive = false;
-						break;
-					} else if (fight.health == 0 || fight.health < 0) {
-						alive = false;
-						int mercy = JOptionPane.showOptionDialog(null,
-								"Do you wish to spare Ember", "Dark Forest", 0,
-								JOptionPane.INFORMATION_MESSAGE, null,
-								new String[] { "Spare", "Kill" }, null);
-						if (mercy == 0) {
-							JOptionPane
-									.showMessageDialog(
-											null,
-											"Ember spreads his wings incinerates you. He whispers I will not be killed by the likes of you. ");
-							break;
-						} else {
-							JOptionPane
-									.showMessageDialog(null,
-											"The great dragons body lies motionless. His gold is now yours.");
-							g.money += 10000;
-						}
-					}
-					// System.out.println("Working");'
-					if (g.alive == false) {
-						break;
-					}
-				}
+			if (Darkforestplace == DRAGON) {
 
-			}
-			if (task == ORCS) {
+				// System.out.println("Working");
+
+				ember = new Enemy();
+				ember.draw();
+				ember.health = 300;
+				ember.damage = 50;
+				ember.prot= 20;
+				while (ember.alive) {
+
+					ember.round(g, "Ember");
+					// g.health-= 30;
+					if(!g.alive){
+						break;
+					}
+					
+					
+					int mercy = JOptionPane.showOptionDialog(null,
+							"Do you wish to spare ember", "Dark Forest", 0,
+							JOptionPane.INFORMATION_MESSAGE, null,
+							new String[] { "Spare", "Kill" }, null);
+					if (mercy == 0) {
+						JOptionPane.showMessageDialog(null,
+								"Ember incinerates you. A dragon as great as he is won't stand for defeat. ");
+						g.alive=false;
+						break;
+					} else if (mercy == 1) {
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"The great dragon stumbles backward after the finality of the last stroke. He is consumed by rage and becomes a demon ");
+						
+						
+
+
+						// System.out.println("Working");
+
+						ember2 = new Enemy();
+						ember2.draw();
+						ember2.health = 300;
+						ember2.damage = 50;
+						ember2.prot= 20;
+						while (ember2.alive) {
+
+							ember2.round(g, "Ember");
+							// g.health-= 30;
+							if(!g.alive){
+								break;
+							}
+							JOptionPane.showMessageDialog(null, "The demons poisoned blood spills. It rears its head back in rage before collapsing to the ground. With its protector gone, you get his gold");
+							g.money+=99999;
+							System.out.println(+g.money);
+							JOptionPane.showMessageDialog(null, "you have "+g.money+ " gold.")
+							
+							
+							;
+							
+
+								// System.out.println("Working");
+
+
+							
+							}
+
+						}
+
+					
+
+						// System.out.println("Working");
+
+
+					
+					}
+				g.location=3;
+				}
+				
+
+			
+		else if (Darkforestplace == ORCS) {
 				// System.out.println("Working");
 				for (int i = 0; orcs.length > i; i++) {
 					orcs[i] = new Enemy();
@@ -85,10 +130,11 @@ public class Missions extends GameObject {
 					}
 					break;
 				}
-			}
+			g.location=3;
+			}}
 
 		}
-	}
+	
 
 	void goblin(GameObject g) {
 		JOptionPane.showMessageDialog(null, "Travel to the goblins");
@@ -127,9 +173,11 @@ public class Missions extends GameObject {
 							}
 
 						}
+						g.location=3;
 					}
 					break;
 				}
+				
 
 			}
 			if (task == HYDRA) {
@@ -155,20 +203,24 @@ public class Missions extends GameObject {
 							new String[] { "Spare", "Kill" }, null);
 					if (mercy == 0) {
 						JOptionPane.showMessageDialog(null,
-								"The Hydra slithers off annoyed");
+								"The Hydra lurches off to die");
 						break;
 					} else if (mercy == 1) {
 						JOptionPane
 								.showMessageDialog(
 										null,
-										"The Heads laughs cruely as its poisonous blood spills, killing you. The hydra smiles knowing it will live...                                                             when you restart.");
+										"The Heads laughs cruely as its poisonous blood spills, killing you.");
+						g.alive=false;
 						break;
 					}
 
 				}
-				
+				g.location=3;
+
 			}
 
 		}
+		g.location=3;
+
 	}
 }

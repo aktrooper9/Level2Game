@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +21,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	final int GAME = 2;
 	final int MAP = 3;
 	final int END = 4;
+	Stack<String> actions = new Stack<String>();
 	int currentState = 0;
 	// Timer framedraw;
 	JButton play = new JButton("play");
@@ -29,6 +31,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	JButton dark = new JButton("Dark Forest :Orcs: ");
 	JButton goblins = new JButton("The Goblin Hideout");
 	JButton map = new JButton("Map");
+	JButton heal = new JButton("Heal");
+	JButton instructions = new JButton("Instructions ");
 
 	String creature;
 	GameObject player;
@@ -42,6 +46,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		dark.addActionListener(this);
 		town.addActionListener(this);
 		goblins.addActionListener(this);
+		heal.addActionListener(this);
+		instructions.addActionListener(this);
 
 		// framedraw = new Timer(1000 / 60, this);
 		add(play);
@@ -51,6 +57,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		add(town);
 		add(dark);
 		add(goblins);
+		add(heal);
+		add(instructions);
 
 		// framedraw.start();
 
@@ -71,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener {
 			drawEndState(g);
 		}
 		// System.out.println(currentState);
-
+		drawActions(g);
 	}
 
 	void updateMenuState() {
@@ -99,14 +107,26 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 		play.setVisible(true);
+		instructions.setVisible(true);
 		quests.setVisible(false);
 		store.setVisible(false);
 		town.setVisible(false);
 		dark.setVisible(false);
 		goblins.setVisible(false);
-
+		heal.setVisible(false);
 		map.setVisible(false);
 
+	}
+
+	void drawActions(Graphics g) {
+		// System.out.println("actions");
+		g.setColor(Color.black);
+		String status = "";
+		for (int i = 0; i < actions.size(); i++) {
+			status += actions.get(i);
+			status += ". ";
+		}
+		g.drawString(status, 50, GameRunner.HEIGHT - 50);
 	}
 
 	void drawGameIntroState(Graphics g) {
@@ -115,21 +135,23 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 
 		play.setVisible(false);
-
+		drawActions(g);
 	}
 
 	void drawGameState(Graphics g) {
 		map.setVisible(true);
 		quests.setVisible(true);
 		store.setVisible(true);
+		heal.setVisible(true);
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 		if (!player.alive) {
 			currentState = MENU;
+
 		}
 
 		// System.out.println("HI");
-		repaint();
+		// repaint();
 	}
 
 	void drawEndState(Graphics g) {
@@ -146,6 +168,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		store.setVisible(false);
 		town.setVisible(true);
 		dark.setVisible(true);
+		heal.setVisible(true);
 		goblins.setVisible(true);
 		// System.out.println("HI");
 		repaint();
@@ -158,7 +181,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		JButton buttonPressed = (JButton) e.getSource();
 		if (buttonPressed.equals(play)) {
-
+			// actions.push("play");
 			// currentState++;
 			boolean success = false;
 			while (!success) {
@@ -196,33 +219,75 @@ public class GamePanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, "You are " + player.name
 					+ " of the " + creature);
 			currentState = GAME;
+			
+			player.rations+=20;
 		}
 		if (buttonPressed.equals(store)) {
-			int task = JOptionPane.showOptionDialog(null,
+			// actions.push("Store");
+			int Purchasable = JOptionPane.showOptionDialog(null,
 					"What would you like to buy", "Shop", 0,
 					JOptionPane.INFORMATION_MESSAGE, null, new String[] {
-							"Broad Sword", "Great Club", "Claymore", "shield",
-							"Armor", "Quit" }, null);
-			if (task == 0) {
-				new BroadSword(player);
+							"Broad Sword: 5 gold", "Great Club: 6 gold", "Claymore: 6 gold", "Shield: 5 gold",
+							"Armor: Gold", "Food: 1 gold","Quit" }, null);
+			if (Purchasable == 0) {
+				player.money -= 5;
+				if (player.money <= 0) {
+					JOptionPane.showMessageDialog(null, "Not enough money");
+					player.money += 5;
+				} else {
+					new BroadSword(player);
+				}
 				// System.out.println(player.damage);
-			} else if (task == 1) {
-				new GreatClub(player);
+			} else if (Purchasable == 1) {
+				player.money -= 6;
+				if (player.money <= 0) {
+					JOptionPane.showMessageDialog(null, "Not enough money");
+					player.money += 6;
+				} else {
+					new GreatClub(player);
+				}
 				// System.out.println(player.damage);
-			} else if (task == 2) {
-				new Claymore(player);
+			} else if (Purchasable == 2) {
+				player.money -= 6;
+				if (player.money <= 0) {
+					JOptionPane.showMessageDialog(null, "Not enough money");
+					player.money += 6;
+				} else {
+					new Claymore(player);
+				}
 				// System.out.println(player.damage);
-			} else if (task == 3) {
-				new Shield(player);
+			} else if (Purchasable == 3) {
+				player.money -= 5;
+				if (player.money <= 0) {
+					JOptionPane.showMessageDialog(null, "Not enough money");
+					player.money += 5;
+				} else {
+					new Shield(player);
+				}
 				// System.out.println(player.damage);
-			} else if (task == 4) {
-				new Shield(player);
+			} else if (Purchasable == 4) { //
+
+				player.money -= 10;
+				if (player.money <= 0) {
+					JOptionPane.showMessageDialog(null, "Not enough money");
+					player.money += 10;
+				} else {
+					new Armor(player);
+				}}
 				// System.out.println(player.damage);
-			} else if (task == 5) {
-				new Armor(player);
+				else if (Purchasable == 5) { //
+
+					player.money -= 1;
+					if (player.money <= 0) {
+						JOptionPane.showMessageDialog(null, "Not enough money");
+						player.money += 1;
+					} else {
+						player.rations+=1;
+					}
 				// System.out.println(player.damage);
-			} else if (task == 6) {
+			} else if (Purchasable == 6) { // Quit
 				// System.out.println(player.damage);
+				actions.pop();
 				currentState += 1;
 				currentState -= 1;
 			}
@@ -256,6 +321,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		if (buttonPressed.equals(town)) {
 			player.location = 0;
+			currentState = GAME;
 			town.setVisible(false);
 			dark.setVisible(false);
 			goblins.setVisible(false);
@@ -281,11 +347,41 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		else if (buttonPressed.equals(map)) {
 			currentState = MAP;
+
 		}
-		if (!player.alive) {
+		else if(buttonPressed.equals(instructions)){
+			System.out.println("Instructions");
+			int instruct = JOptionPane.showOptionDialog(null, "Instructions",
+					"Instructing ", 0, JOptionPane.INFORMATION_MESSAGE, null,
+					new String[] { "Moving","Combat","Quit" }, null);
+			if(instruct==0){
+				JOptionPane.showMessageDialog(null, "Click on the store to buy items. Click on the quests to see possible jobs.  "
+						+ "Click on the map to find all the places you need to go");
+			}
+			if(instruct==1){
+				JOptionPane.showMessageDialog(null, "When in fights you may use a basic attack which will always hit "
+						+ "or a big attack which has a 50% chance of striking. You may also choose to heal your character with rations.");
+			}
+
+		}
+		
+		else if(buttonPressed.equals(heal)){
+
+			if(player.rations<=0){
+				JOptionPane.showMessageDialog(null, "No food left");
+			}
+			else{
+			player.health+=50;
+			player.rations-=1;
+			JOptionPane.showMessageDialog(null, "The delicous food is a most welcome guest. You now have "+player.health+" health");
+			}
+		
+		}
+		else 		if (!player.alive) {
 			JOptionPane.showMessageDialog(null, "You lose");
 			currentState = 0;
 		}
+		
 		repaint();
 	}
 

@@ -236,6 +236,7 @@ public class GamePanel extends JPanel implements ActionListener {
 					player.money += 5;
 				} else {
 					new BroadSword(player);
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon");
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 1) {
@@ -245,6 +246,8 @@ public class GamePanel extends JPanel implements ActionListener {
 					player.money += 6;
 				} else {
 					new GreatClub(player);
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon");
+
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 2) {
@@ -254,6 +257,8 @@ public class GamePanel extends JPanel implements ActionListener {
 					player.money += 6;
 				} else {
 					new Claymore(player);
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon");
+
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 3) {
@@ -263,6 +268,8 @@ public class GamePanel extends JPanel implements ActionListener {
 					player.money += 5;
 				} else {
 					new Shield(player);
+					JOptionPane.showMessageDialog(null, "Congratulations on your new shield");
+
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 4) { //
@@ -273,6 +280,8 @@ public class GamePanel extends JPanel implements ActionListener {
 					player.money += 10;
 				} else {
 					new Armor(player);
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Armor");
+
 				}}
 				// System.out.println(player.damage);
 				else if (Purchasable == 5) { //
@@ -283,6 +292,8 @@ public class GamePanel extends JPanel implements ActionListener {
 						player.money += 1;
 					} else {
 						player.rations+=1;
+						JOptionPane.showMessageDialog(null, "You have bought one more Ration");
+
 					}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 6) { // Quit
@@ -293,8 +304,32 @@ public class GamePanel extends JPanel implements ActionListener {
 			}
 		}
 		if (buttonPressed.equals(quests)) {
+			
+			if(!m.ember2.alive){
 
-			int task = JOptionPane.showOptionDialog(null, "View a Quest",
+				int task = JOptionPane.showOptionDialog(null, "View Quests",
+						"Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,
+						new String[] { 
+								"Kill 10 goblins", "kill 4 orcs ",
+								"Kill a goblin Hyrda", "Quit" }, null);
+
+			
+				 if (task == 0) {
+					JOptionPane
+							.showInputDialog("Go to the goblin hideout and kill 10 Goblins    Reward: 40");
+				} else if (task == 1) {
+					JOptionPane
+							.showInputDialog("go to the dark forest and kill 4 Orcs    Reward: 70");
+				}
+
+				else if (task == 2) {
+					JOptionPane
+							.showInputDialog("go to the goblin hidout and kill a hydra  Reward: 5 gold");
+
+				}
+			}
+
+			int task = JOptionPane.showOptionDialog(null, "View Quests",
 					"Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,
 					new String[] { "Kill Ember (EXTRA HARD)",
 							"Kill 10 goblins", "kill 4 orcs ",

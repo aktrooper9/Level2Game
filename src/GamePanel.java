@@ -16,13 +16,13 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener {
 	String name;
-	final int MENU = 0;
-	final int GAMEINTRO = 1;
-	final int GAME = 2;
-	final int MAP = 3;
-	final int END = 4;
+	static	final int MENU = 0;
+	static	final int GAMEINTRO = 1;
+	static	final int GAME = 2;
+	static	final int MAP = 3;
+	static	final int END = 4;
 	Stack<String> actions = new Stack<String>();
-	int currentState = 0;
+	static int currentState = 0;
 	// Timer framedraw;
 	JButton play = new JButton("play");
 	JButton store = new JButton("store");
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	String creature;
 	GameObject player;
 	Missions m = new Missions(player);
-
+MissionComplete c = new MissionComplete(player);
 	GamePanel() {
 		play.addActionListener(this);
 		store.addActionListener(this);
@@ -212,9 +212,7 @@ public class GamePanel extends JPanel implements ActionListener {
 				}
 			}
 			JOptionPane.showMessageDialog(null, "Damage: " + player.damage
-					+ "\nArmor: " + player.prot + "\nSpeed: " + player.speed
-					+ "\nhealth:" + player.health + "\nConstitution "
-					+ player.dps + "\nHunger: " + player.hunger);
+					+ "\nArmor: " + player.prot + " health: " + player.health);
 			player.name = JOptionPane.showInputDialog("Choose a name");
 			JOptionPane.showMessageDialog(null, "You are " + player.name
 					+ " of the " + creature);
@@ -304,54 +302,7 @@ public class GamePanel extends JPanel implements ActionListener {
 			}
 		}
 		if (buttonPressed.equals(quests)) {
-			
-			if(!m.ember2.alive){
-
-				int task = JOptionPane.showOptionDialog(null, "View Quests",
-						"Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,
-						new String[] { 
-								"Kill 10 goblins", "kill 4 orcs ",
-								"Kill a goblin Hyrda", "Quit" }, null);
-
-			
-				 if (task == 0) {
-					JOptionPane
-							.showInputDialog("Go to the goblin hideout and kill 10 Goblins    Reward: 40");
-				} else if (task == 1) {
-					JOptionPane
-							.showInputDialog("go to the dark forest and kill 4 Orcs    Reward: 70");
-				}
-
-				else if (task == 2) {
-					JOptionPane
-							.showInputDialog("go to the goblin hidout and kill a hydra  Reward: 5 gold");
-
-				}
-			}
-
-			int task = JOptionPane.showOptionDialog(null, "View Quests",
-					"Quests", 0, JOptionPane.INFORMATION_MESSAGE, null,
-					new String[] { "Kill Ember (EXTRA HARD)",
-							"Kill 10 goblins", "kill 4 orcs ",
-							"Kill a goblin Hyrda", "Quit" }, null);
-
-			if (task == 0) {
-				JOptionPane
-						.showInputDialog(" Go to dark forest , than kill the dragon Ember at his lair  Warning: EXTRA HARD  Reward: 500 gold");
-
-			} else if (task == 1) {
-				JOptionPane
-						.showInputDialog("Go to the goblin hideout and kill 10 Goblins    Reward: 40");
-			} else if (task == 2) {
-				JOptionPane
-						.showInputDialog("go to the dark forest and kill 4 Orcs    Reward: 70");
-			}
-
-			else if (task == 3) {
-				JOptionPane
-						.showInputDialog("go to the goblin hidout and kill a hydra  Reward: 5 gold");
-
-			}
+			c.run(player);
 		}
 
 		if (buttonPressed.equals(town)) {
@@ -395,7 +346,7 @@ public class GamePanel extends JPanel implements ActionListener {
 			}
 			if(instruct==1){
 				JOptionPane.showMessageDialog(null, "When in fights you may use a basic attack which will always hit "
-						+ "or a big attack which has a 50% chance of striking. You may also choose to heal your character with rations.");
+						+ "or a big attack which has a 50% chance of striking. You may also choose to heal your character with rations, however you will lose the chance to strike.");
 			}
 
 		}

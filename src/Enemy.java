@@ -26,9 +26,10 @@ public class Enemy extends GameObject {
 			damage -= g.prot;
 			g.doDamage(damage);
 			if(!g.alive){
+				GamePanel.currentState= GamePanel.MENU;
 				break;
 			}
-			System.out.println("You took " + damage + " damage, you have "
+			JOptionPane.showMessageDialog(null,"The enemy swings dealing " + damage + " damage, you have "
 					+ g.health + " Left");
 			damage = gruntdamage;
 			damage -= g.prot;
@@ -47,9 +48,12 @@ public class Enemy extends GameObject {
 					g.damage = g.damage * 2;
 					g.damage -= prot;
 					doDamage(g.damage);
-					System.out.println("You dealt " + g.damage + " damage, "
+					JOptionPane.showMessageDialog(null,"You swing your sword wildly connecting with your enemies flesh. It deals " + g.damage + " damage, "
 							+ Creature + " has " + health + " Health Left");
 					g.damage = characterdamage;
+				}
+				else{
+					JOptionPane.showMessageDialog(null,"You swing wildly throwing you off balance and missing your strike.");
 				}
 			}
 			if (move == 1) {
@@ -59,17 +63,18 @@ public class Enemy extends GameObject {
 					g.damage = 0;
 				}
 doDamage(g.damage);
-				System.out.println("You dealt " + g.damage + " damage, the "
-						+ Creature + " has " + health + " Health Left");
+JOptionPane.showMessageDialog(null,"You swing your sword with swift strokes dealing " + g.damage + " damage, "
+		+ Creature + " has " + health + " Health Left");
 				g.damage = characterdamage;
 			}
 			if(move==2){
 				if(g.rations<=0){
 					JOptionPane.showMessageDialog(null, "No food left");
 				}
+				g.health+=damage;
 				g.health+=50;
 				g.rations-=1;
-				JOptionPane.showMessageDialog(null, "You grab a wuick bite while dodging attacks.. You now have "+g.health+" health");
+				JOptionPane.showMessageDialog(null, "You grab a quick bite while dodging attacks.. You now have "+g.health+" health");
 
 			}
 		}

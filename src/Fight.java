@@ -2,7 +2,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-
+// unused
 public class Fight extends GameObject{
 Fight(){
 	alive = true;

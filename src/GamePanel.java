@@ -2,16 +2,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import java.util.Stack;
-
 import javax.swing.JButton;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-
 public class GamePanel extends JPanel implements ActionListener {
 	/**
 	 * 
@@ -185,26 +179,25 @@ MissionComplete c = new MissionComplete(player);
 		if (buttonPressed.equals(play)) {
 			// actions.push("play");
 			// currentState++;
-			boolean success = false;
-			while (!success) {
+		//	boolean success = false;
+			//while (!success) {
 
-				creature = JOptionPane
-						.showInputDialog("Choose  orcs, elves, and dragonborns,");
+				creature = JOptionPane.showInputDialog(null, "Choose your race;  Orc, elf, Dragonborn  ", "Character Creation", JOptionPane.INFORMATION_MESSAGE);
 				if (creature.equalsIgnoreCase("orc")
 						|| creature.equalsIgnoreCase("orcs")) {
 					player = new Orc();
-					success = true;
+					//success = true;
 					player.alive = true;
 				} else if (creature.equalsIgnoreCase("elf")
 						|| creature.equalsIgnoreCase("elves")) {
-					player = new Elf();
-					success = true;
+					//player = new Elf();
+					//success = true;
 					player.alive = true;
 
 				} else if (creature.equalsIgnoreCase("dragonborn")
 						|| creature.equalsIgnoreCase("dragonborns")) {
 					player = new DragonBorn();
-					success = true;
+					//success = true;
 					player.alive = true;
 
 				} else {
@@ -213,15 +206,15 @@ MissionComplete c = new MissionComplete(player);
 
 				}
 			}
-			JOptionPane.showMessageDialog(null, "Damage: " + player.damage
-					+ "\nArmor: " + player.prot + " health: " + player.health);
-			player.name = JOptionPane.showInputDialog("Choose a name");
+			JOptionPane.showMessageDialog(null, "Your stats are \nDamage: " + player.damage
+					+ "\nArmor: " + player.prot + " \nhealth: " + player.health, "Stats", JOptionPane.INFORMATION_MESSAGE);
+			player.name = JOptionPane.showInputDialog("Choose your name");
 			JOptionPane.showMessageDialog(null, "You are " + player.name
 					+ " of the " + creature);
 			currentState = GAME;
 			
 			player.rations+=20;
-		}
+		//}
 		if (buttonPressed.equals(store)) {
 			// actions.push("Store");
 			int Purchasable = JOptionPane.showOptionDialog(null,
@@ -232,43 +225,43 @@ MissionComplete c = new MissionComplete(player);
 			if (Purchasable == 0) {
 				player.money -= 5;
 				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money");
+					JOptionPane.showMessageDialog(null, "Not enough money", "Shop", JOptionPane.INFORMATION_MESSAGE);
 					player.money += 5;
 				} else {
 					new BroadSword(player);
-					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon");
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon", "Congrats", JOptionPane.INFORMATION_MESSAGE);
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 1) {
 				player.money -= 6;
 				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money");
+					JOptionPane.showMessageDialog(null, "Not enough money", "Shop", JOptionPane.INFORMATION_MESSAGE);
 					player.money += 6;
 				} else {
 					new GreatClub(player);
-					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon");
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon", "Congrats", JOptionPane.INFORMATION_MESSAGE);
 
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 2) {
 				player.money -= 6;
 				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money");
+					JOptionPane.showMessageDialog(null, "Not enough money", "Shop", JOptionPane.INFORMATION_MESSAGE);
 					player.money += 6;
 				} else {
 					new Claymore(player);
-					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon");
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Weapon", "Congrats", JOptionPane.INFORMATION_MESSAGE);
 
 				}
 				// System.out.println(player.damage);
 			} else if (Purchasable == 3) {
 				player.money -= 5;
 				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money");
+					JOptionPane.showMessageDialog(null, "Not enough money", "Shop", JOptionPane.INFORMATION_MESSAGE);
 					player.money += 5;
 				} else {
 					new Shield(player);
-					JOptionPane.showMessageDialog(null, "Congratulations on your new shield");
+					JOptionPane.showMessageDialog(null, "Congratulations on your new shield", "Congrats", JOptionPane.INFORMATION_MESSAGE);
 
 				}
 				// System.out.println(player.damage);
@@ -276,11 +269,11 @@ MissionComplete c = new MissionComplete(player);
 
 				player.money -= 10;
 				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money");
+					JOptionPane.showMessageDialog(null, "Not enough money", "Shop", JOptionPane.INFORMATION_MESSAGE);
 					player.money += 10;
 				} else {
 					new Armor(player);
-					JOptionPane.showMessageDialog(null, "Congratulations on your new Armor");
+					JOptionPane.showMessageDialog(null, "Congratulations on your new Armor", "Congrats", JOptionPane.INFORMATION_MESSAGE);
 
 				}}
 				// System.out.println(player.damage);
@@ -288,11 +281,11 @@ MissionComplete c = new MissionComplete(player);
 
 					player.money -= 1;
 					if (player.money <= 0) {
-						JOptionPane.showMessageDialog(null, "Not enough money");
+						JOptionPane.showMessageDialog(null, "Not enough money", "Shop", JOptionPane.INFORMATION_MESSAGE);
 						player.money += 1;
 					} else {
 						player.rations+=1;
-						JOptionPane.showMessageDialog(null, "You have bought one more Ration");
+						JOptionPane.showMessageDialog(null, "You have bought one more Ration", "Congrats", JOptionPane.INFORMATION_MESSAGE);
 
 					}
 				// System.out.println(player.damage);
@@ -340,15 +333,15 @@ MissionComplete c = new MissionComplete(player);
 		else if(buttonPressed.equals(instructions)){
 			System.out.println("Instructions");
 			int instruct = JOptionPane.showOptionDialog(null, "Instructions",
-					"Instructing ", 0, JOptionPane.INFORMATION_MESSAGE, null,
-					new String[] { "Moving","Combat","Quit" }, null);
+					"Which would you like to learn about, ", 0, JOptionPane.INFORMATION_MESSAGE, null,
+					new String[] { "Moving","Combat", }, null);
 			if(instruct==0){
-				JOptionPane.showMessageDialog(null, "Click on the store to buy items. Click on the quests to see possible jobs.  "
-						+ "Click on the map to find all the places you need to go");
+				JOptionPane.showMessageDialog(null, "Click on the store to buy items. \nClick on the quests to see possible jobs.  "
+						+ "\nClick on the map to find all the places you need to go", "Intro", JOptionPane.INFORMATION_MESSAGE);
 			}
 			if(instruct==1){
 				JOptionPane.showMessageDialog(null, "When in fights you may use a basic attack which will always hit "
-						+ "or a big attack which has a 50% chance of striking. You may also choose to heal your character with rations, however you will lose the chance to strike.");
+						+ "/nor a big attack which has a 50% chance of striking. /nYou may also choose to heal your character with rations, however you will lose the chance to strike.", "Intro", JOptionPane.INFORMATION_MESSAGE);
 			}
 
 		}
@@ -361,12 +354,12 @@ MissionComplete c = new MissionComplete(player);
 			else{
 			player.health+=50;
 			player.rations-=1;
-			JOptionPane.showMessageDialog(null, "The delicous food is a most welcome guest. You now have "+player.health+" health");
+			JOptionPane.showMessageDialog(null, "The delicous food is a most welcome guest. You now have "+player.health+" health", "Food", JOptionPane.INFORMATION_MESSAGE);
 			}
 		
 		}
 		else 		if (!player.alive) {
-			JOptionPane.showMessageDialog(null, "You lose");
+			JOptionPane.showMessageDialog(null, "You lose", "lose", JOptionPane.INFORMATION_MESSAGE);
 			currentState = 0;
 		}
 		

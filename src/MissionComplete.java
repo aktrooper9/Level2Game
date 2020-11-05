@@ -22,7 +22,7 @@ else{
 			JOptionPane
 					.showMessageDialog(
 							null,
-							" Go to dark forest , than kill the dragon Ember at his lair  Warning: EXTRA HARD  Reward: 500 gold");
+							" Go to dark forest , than kill the dragon Ember at his lair  Warning: EXTRA HARD ");
 }
 			
 		} else if (task == 1) {
@@ -32,7 +32,7 @@ else{
 		else{
 			JOptionPane
 					.showMessageDialog(null,
-							"Go to the goblin hideout and kill 10 Goblins    Reward: 40");
+							"Go to the goblin hideout and kill 10 Goblins    ");
 		}
 		} else if (task == 2) {
 			if(g.orcComplete==true){
@@ -40,7 +40,7 @@ else{
 			}
 			else{
 			JOptionPane.showMessageDialog(null,
-					"go to the dark forest and kill 4 Orcs    Reward: 70");
+					"go to the dark forest and kill 4 Orcs    ");
 			}
 		}
 
@@ -50,7 +50,7 @@ else{
 			}
 			else{
 			JOptionPane.showMessageDialog(null,
-					"go to the goblin hidout and kill a hydra  Reward: 5 gold");
+					"go to the goblin hidout and kill a hydra  ");
 			}
 		}
 	}

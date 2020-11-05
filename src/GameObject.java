@@ -1,3 +1,8 @@
+import javax.swing.JOptionPane;
+
+
+ // add tutorial add death confusing. add more information.
+
 
 
 public class GameObject  {
@@ -20,7 +25,7 @@ void doDamage(int damage){
 	System.out.println("Damage "+damage);
 	this.health-=damage;
 	if(health<=0){
-		System.out.println("Dead");
+		JOptionPane.showMessageDialog(null,"You died.");
 		alive=false;
 	}
 }

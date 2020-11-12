@@ -115,8 +115,9 @@ g.location = 3;
 							if (mercy == 0) {
 								JOptionPane
 										.showMessageDialog(null,
-												"The orc runs off afraid and dishonered ");
-								
+												"The orc runs off afraid and dishonered. In his haste he drops his gold");
+								g.money+=1;
+								JOptionPane.showMessageDialog(null, "You gained 1 gold.");
 							}
 							g.location = 3;
 						}
@@ -166,8 +167,9 @@ g.location = 3;
 							if (mercy == 0) {
 								JOptionPane
 										.showMessageDialog(null,
-												"The goblin runs off as its friends laugh");
+												"The goblin runs off as its friends laugh. He drops what little money he has");
 								;
+								JOptionPane.showMessageDialog(null, "You gained 1 gold.");
 							}
 
 						}

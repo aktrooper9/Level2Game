@@ -2,8 +2,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.Stack;
+
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 public class GamePanel extends JPanel implements ActionListener {
@@ -12,6 +18,9 @@ public class GamePanel extends JPanel implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	String name;
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;	
 	static	final int MENU = 0;
 	static	final int GAMEINTRO = 1;
 	static	final int GAME = 2;
@@ -29,12 +38,14 @@ public class GamePanel extends JPanel implements ActionListener {
 	JButton map = new JButton("Map");
 	JButton heal = new JButton("Heal");
 	JButton instructions = new JButton("Instructions ");
+	JLabel health = new JLabel();
 
 	String creature;
 	GameObject player;
 	Missions m = new Missions(player);
 MissionComplete c = new MissionComplete(player);
 	GamePanel() {
+		play.add(health);
 		play.addActionListener(this);
 		store.addActionListener(this);
 		quests.addActionListener(this);
@@ -55,11 +66,14 @@ MissionComplete c = new MissionComplete(player);
 		add(goblins);
 		add(heal);
 		add(instructions);
-
+		add(health);
+		if (needImage) {
+		    loadImage ("Town.jpg");
+		}
 		// framedraw.start();
 
 	}
-
+//paintcompoenent likely causing lag
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -87,7 +101,6 @@ MissionComplete c = new MissionComplete(player);
 	}
 
 	void updateGameState() {
-
 	}
 
 	void updateMapState() {
@@ -135,21 +148,41 @@ MissionComplete c = new MissionComplete(player);
 	}
 
 	void drawGameState(Graphics g) {
+		play.setVisible(false);
 		map.setVisible(true);
 		quests.setVisible(true);
 		store.setVisible(true);
 		heal.setVisible(true);
-		g.setColor(Color.GREEN);
+		//
+		quests.setLocation(380, 65);
+		store.setLocation(250,350);
+		map.setLocation(180,180);
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 		if (!player.alive) {
 			currentState = MENU;
-
+			
 		}
-
+		if (gotImage) {
+			g.drawImage(image, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
+		} else {
+			System.out.println("noimage");
+			g.setColor(Color.GREEN);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+		}
 		// System.out.println("HI");
 		// repaint();
 	}
-
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            System.out.println("pic");
+	        }
+	        needImage = false;
+	    }
+	}
 	void drawEndState(Graphics g) {
 		// System.out.println("end");
 
@@ -160,6 +193,8 @@ MissionComplete c = new MissionComplete(player);
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 
 		// System.out.println("map");
+		play.setVisible(false);
+
 		quests.setVisible(false);
 		store.setVisible(false);
 		town.setVisible(true);
@@ -168,13 +203,14 @@ MissionComplete c = new MissionComplete(player);
 		goblins.setVisible(true);
 		// System.out.println("HI");
 		repaint();
+		
 	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		// repaint();
-
+		// repaint()
 		JButton buttonPressed = (JButton) e.getSource();
 		if (buttonPressed.equals(play)) {
 			// actions.push("play");
@@ -205,7 +241,6 @@ MissionComplete c = new MissionComplete(player);
 							+ " does not compute");
 
 				}
-			}
 			JOptionPane.showMessageDialog(null, "Your stats are \nDamage: " + player.damage
 					+ "\nArmor: " + player.prot + " \nhealth: " + player.health, "Stats", JOptionPane.INFORMATION_MESSAGE);
 			player.name = JOptionPane.showInputDialog("Choose your name");
@@ -213,7 +248,8 @@ MissionComplete c = new MissionComplete(player);
 					+ " of the " + creature);
 			currentState = GAME;
 			
-			player.rations+=20;
+			player.rations+=20;}
+			
 		//}
 		if (buttonPressed.equals(store)) {
 			// actions.push("Store");
@@ -364,6 +400,10 @@ MissionComplete c = new MissionComplete(player);
 		}
 		
 		repaint();
+		String hp = String.valueOf(player.health);
+		health.setText("health: "+hp);
+		health.setForeground(Color.WHITE);
+		health.setSize(30,30);
 	}
 
 }

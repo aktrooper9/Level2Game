@@ -24,13 +24,13 @@ public class Enemy extends GameObject {
 		int gruntdamage = damage;
 		while (alive&&g.alive) {
 			damage -= g.prot;
-			g.doDamage(damage);
+			g.doDamageEnemy(damage);
 			if(!g.alive){
 				GamePanel.currentState= GamePanel.MENU;
 				break;
 			}
 			JOptionPane.showMessageDialog(null,"The enemy swings dealing " + damage + " damage, you have "
-					+ g.health + " Left");
+					+ g.health + " health left");
 			damage = gruntdamage;
 			damage -= g.prot;
 
@@ -47,7 +47,7 @@ public class Enemy extends GameObject {
 					}
 					g.damage = g.damage * 2;
 					g.damage -= prot;
-					doDamage(g.damage);
+					doDamageEnemy(g.damage);
 					JOptionPane.showMessageDialog(null,"You swing your sword wildly connecting with your enemies flesh. It deals " + g.damage + " damage, "
 							+ Creature + " has " + health + " Health Left");
 					g.damage = characterdamage;
@@ -62,7 +62,7 @@ public class Enemy extends GameObject {
 				if (g.damage < 0) {
 					g.damage = 0;
 				}
-doDamage(g.damage);
+				doDamageEnemy(g.damage);
 JOptionPane.showMessageDialog(null,"You swing your sword with swift strokes dealing " + g.damage + " damage, "
 		+ Creature + " has " + health + " Health Left");
 				g.damage = characterdamage;

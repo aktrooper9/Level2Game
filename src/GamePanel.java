@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	String name;
 	public static BufferedImage image;
+	public static BufferedImage image2;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
 	static	final int MENU = 0;
@@ -39,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	JButton heal = new JButton("Heal");
 	JButton instructions = new JButton("Instructions ");
 	JLabel health = new JLabel();
+	JLabel xp = new JLabel();
 
 	String creature;
 	GameObject player;
@@ -67,8 +69,10 @@ MissionComplete c = new MissionComplete(player);
 		add(heal);
 		add(instructions);
 		add(health);
+		add(xp);
 		if (needImage) {
-		    loadImage ("Town.jpg");
+		    loadImage ("Town.jpg"); 
+		    loadImage ("Map.png");
 		}
 		// framedraw.start();
 
@@ -202,6 +206,15 @@ MissionComplete c = new MissionComplete(player);
 		heal.setVisible(true);
 		goblins.setVisible(true);
 		// System.out.println("HI");
+		if (gotImage) {
+			g.drawImage(image2, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
+		} else {
+			System.out.println("noimage");
+			g.setColor(Color.GREEN);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+		}
+
+		
 		repaint();
 		
 	}
@@ -403,7 +416,12 @@ MissionComplete c = new MissionComplete(player);
 		String hp = String.valueOf(player.health);
 		health.setText("health: "+hp);
 		health.setForeground(Color.WHITE);
-		health.setSize(30,30);
+		String xP = String.valueOf("Experience: "+player.xp+" Level: "+player.level);
+		xp.setText(xP);
+		int exp= Integer.valueOf(xP);
+		xp.setForeground(Color.WHITE);
+		player.levelup(exp, player);
+
 	}
 
 }

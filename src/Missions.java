@@ -1,8 +1,8 @@
 import javax.swing.JOptionPane;
 
 public class Missions extends GameObject {
-	Enemy[] goblins = new Enemy[10];
-	Enemy[] orcs = new Enemy[5];
+	Enemy[] goblins = new Enemy[5];
+	Enemy[] orcs = new Enemy[3];
 	Enemy hydra = new Enemy();
 	Enemy ember = new Enemy();
 	Enemy ember2 = new Enemy();
@@ -15,9 +15,9 @@ public class Missions extends GameObject {
 	Missions(GameObject g) {
 		ember = new Enemy();
 		ember.draw();
-		ember.health = 300;
-		ember.damage = 50;
-		ember.prot = 20;
+		ember.health = 900;
+		ember.damage = 90;
+		ember.prot = 25;
 	}
 
 	void killEmber(GameObject g) {
@@ -71,11 +71,12 @@ public class Missions extends GameObject {
 											"The great dragon stumbles backward after the finality of the last stroke. He then falls over dead. ");
 ember.alive= false;
 							// System.out.println("Working");
+g.xp+=100;
 
 								g.money += 99999;
 								System.out.println(+g.money);
 								JOptionPane.showMessageDialog(null, "you have "
-										+ g.money + " gold.")
+										+ g.money + " gold.  \nYou earned 100 experience"  )
 								;
 								g.emberComplete= true;
 						
@@ -118,6 +119,13 @@ g.location = 3;
 												"The orc runs off afraid and dishonered. In his haste he drops his gold");
 								g.money+=1;
 								JOptionPane.showMessageDialog(null, "You gained 1 gold.");
+							}
+							else{
+								g.xp+=10;
+								JOptionPane
+								.showMessageDialog(null,
+										"You gained 10 experience");
+
 							}
 							g.location = 3;
 						}
@@ -171,7 +179,13 @@ g.location = 3;
 								;
 								JOptionPane.showMessageDialog(null, "You gained 1 gold.");
 							}
+							else{
+								g.xp+=10;
+								JOptionPane
+								.showMessageDialog(null,
+										"You gained 10 experience");
 
+							}
 						}
 						g.location = 3;
 					}
@@ -203,6 +217,10 @@ g.location = 3;
 					if (mercy == 0) {
 						JOptionPane.showMessageDialog(null,
 								"The Hydra lurches off to die");
+						g.xp+=50;
+						JOptionPane
+						.showMessageDialog(null,
+								"You gained 50 experience");
 						break;
 					} else if (mercy == 1) {
 						JOptionPane

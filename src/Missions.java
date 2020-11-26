@@ -21,14 +21,7 @@ public class Missions extends GameObject {
 	}
 
 	void killEmber(GameObject g) {
-		int Darkforest= 0;
-		if (g.location == 1) {
-		
-		 Darkforest = JOptionPane.showOptionDialog(null,
-					"Where do you want to go", "Dark Forest", 0,
-					JOptionPane.INFORMATION_MESSAGE, null, new String[] {
-							"Ember", "Orcs" }, null);
-		 if (Darkforest == DRAGON) {
+
 		 if ( ember.alive==false) {
 				JOptionPane.showMessageDialog(null,
 						"You have already killed Ember.");
@@ -46,6 +39,13 @@ public class Missions extends GameObject {
 				
 				// System.out.println("Working");
 				else if (ember.alive) {
+					JOptionPane
+					.showMessageDialog(null,
+							"As you walk around the great cave, jewels clink beneath your feet\n, warriors rot away there weapons by their sides. \n A great pile"
+							+ "of treasure sits at the center of the cave. ");
+					JOptionPane
+					.showMessageDialog(null,
+							"A great dragon sits on his hoard watching you. \nIts dark scales glow like embers in the light./n He then roars a spurt of red hot flames challenging you.");
 					while (ember.alive) {
 
 						ember.round(g, "Ember");
@@ -68,7 +68,7 @@ public class Missions extends GameObject {
 							JOptionPane
 									.showMessageDialog(
 											null,
-											"The great dragon stumbles backward after the finality of the last stroke. He then falls over dead. ");
+											"");
 ember.alive= false;
 							// System.out.println("Working");
 g.xp+=100;
@@ -87,24 +87,24 @@ g.xp+=100;
 					// System.out.println("Working");
 g.location = 3;
 					}
-
+		
 
 				
 				
-			
+	
 
-			else if (Darkforest == ORCS) {
+			 void orcKiller(GameObject g1){
 				JOptionPane.showMessageDialog(null, "You walk around the dark forest before stumbling upon a group orcs");
 				// System.out.println("Working");
 				for (int i = 0; orcs.length > i; i++) {
 					orcs[i] = new Enemy();
 					orcs[i].draw();
 				}
-				while (g.alive) {
+				while (g1.alive) {
 					for (int i = 0; orcs.length > i; i++) {
-						orcs[i].round(g, "Orc");
-						if (g.health == 0 || g.health < 0) {
-							g.alive = false;
+						orcs[i].round(g1, "Orc");
+						if (g1.health == 0 || g1.health < 0) {
+							g1.alive = false;
 							break;
 						} else if (enemyHealth == 0 || enemyHealth < 0) {
 							alive = false;
@@ -117,39 +117,31 @@ g.location = 3;
 								JOptionPane
 										.showMessageDialog(null,
 												"The orc runs off afraid and dishonered. In his haste he drops his gold");
-								g.money+=1;
+								g1.money+=1;
 								JOptionPane.showMessageDialog(null, "You gained 1 gold.");
 							}
 							else{
-								g.xp+=10;
+								g1.xp+=10;
 								JOptionPane
 								.showMessageDialog(null,
 										"You gained 10 experience");
 
 							}
-							g.location = 3;
+							g1.location = 3;
 						}
 						}
-					g.orcComplete= true;
+					g1.orcComplete= true;
 					break;
 }
 					
 				}
-		}
+		
 			
 					
 			
-		}
+		
 
 	void goblin(GameObject g) {
-		JOptionPane.showMessageDialog(null, "Travel to the goblins");
-		if (g.location == 2) {
-
-			int task = JOptionPane.showOptionDialog(null,
-					"Where do you want to go", "Goblin Hideout", 0,
-					JOptionPane.INFORMATION_MESSAGE, null, new String[] {
-							"Goblins", "Hydra" }, null);
-			if (task == GOBlINS) {
 				JOptionPane
 						.showMessageDialog(null,
 								"You walk around the dark forest before stumbling upon a group goblin");
@@ -193,8 +185,8 @@ g.location = 3;
 				}
 
 			}
-			if (task == HYDRA) {
-				JOptionPane.showMessageDialog(null, "You stumble upon one of goblins hydras.");
+			void hydra(GameObject g) {
+				JOptionPane.showMessageDialog(null, "As you blindly stumble around\n, 7 pairs of glowing eyes open/n as a hydra rears its many heads out of the moss with a hiss");
 
 				System.out.println("Working");
 
@@ -236,7 +228,7 @@ g.location = 3;
 			}
 
 		}
-		g.location = 3;
+		
 
-	}
-}
+	
+

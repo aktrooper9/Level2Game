@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	String name;
-	public static BufferedImage image;
-	//public static BufferedImage image2;
+	public static BufferedImage townImage;
+	 public static BufferedImage mapImage;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 
@@ -43,6 +43,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	JButton instructions = new JButton("Instructions ");
 	JLabel health = new JLabel();
 	JLabel xp = new JLabel();
+	JButton ember = new JButton(":Locked:");
+	JButton hydra = new JButton(":Locked:");
 
 	String creature;
 	GameObject player;
@@ -60,6 +62,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		goblins.addActionListener(this);
 		heal.addActionListener(this);
 		instructions.addActionListener(this);
+		ember.addActionListener(this);
+		hydra.addActionListener(this);
 
 		// framedraw = new Timer(1000 / 60, this);
 		add(play);
@@ -70,13 +74,13 @@ public class GamePanel extends JPanel implements ActionListener {
 		add(dark);
 		add(goblins);
 		add(heal);
+		add(ember);
 		add(instructions);
 		add(health);
 		add(xp);
-		if (needImage) {
-			loadImage("Town.jpg");
-			loadImage("Map.png");
-		}
+		add(hydra);
+			townImage=loadImage("Town.jpg");
+			mapImage=loadImage("Map.png");
 		// framedraw.start();
 
 	}
@@ -132,6 +136,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		goblins.setVisible(false);
 		heal.setVisible(false);
 		map.setVisible(false);
+		ember.setVisible(false);
+		hydra.setVisible(false);
 
 	}
 
@@ -161,6 +167,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		quests.setVisible(true);
 		store.setVisible(true);
 		heal.setVisible(true);
+		ember.setVisible(false);
+		hydra.setVisible(false);
 		//
 		quests.setLocation(380, 65);
 		store.setLocation(250, 350);
@@ -170,8 +178,8 @@ public class GamePanel extends JPanel implements ActionListener {
 			currentState = MENU;
 
 		}
-		if (gotImage) {
-			g.drawImage(image, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
+		if (townImage!=null) {
+			g.drawImage(townImage, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
 		} else {
 			System.out.println("noimage");
 			g.setColor(Color.GREEN);
@@ -181,17 +189,15 @@ public class GamePanel extends JPanel implements ActionListener {
 		// repaint();
 	}
 
-	void loadImage(String imageFile) {
-		if (needImage) {
-			try {
-				image = ImageIO.read(this.getClass().getResourceAsStream(
-						imageFile));
-				gotImage = true;
-			} catch (Exception e) {
-				System.out.println("pic");
-			}
-			needImage = false;
+	BufferedImage loadImage(String imageFile) {
+
+		try {
+			return ImageIO
+					.read(this.getClass().getResourceAsStream(imageFile));
+		} catch (Exception e) {
+			System.out.println("Cannot load image "+imageFile);
 		}
+		return null;
 	}
 
 	void drawEndState(Graphics g) {
@@ -203,18 +209,32 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 
+		player.level= 11; //testing
 		// System.out.println("map");
 		play.setVisible(false);
 
 		quests.setVisible(false);
 		store.setVisible(false);
 		town.setVisible(true);
+		town.setLocation(700, 350);
 		dark.setVisible(true);
+		dark.setLocation(508, 242);
 		heal.setVisible(true);
 		goblins.setVisible(true);
+		goblins.setLocation(170, 140);
+		ember.setVisible(true);
+		ember.setLocation(267, 700);
+		hydra.setVisible(true);
+		hydra.setLocation(620, 550);
+		if(player.level>5||player.level==5){
+			hydra.setText("The Swamp: Hydra");
+		}
+		else if(player.level>10||player.level==10){
+			ember.setText("The Mountains: Dragons");
+		}
 		// System.out.println("HI");
-		if (gotImage) {
-			g.drawImage(image, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
+		if (mapImage!=null) {
+			g.drawImage(mapImage, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
 		} else {
 			System.out.println("noimage");
 			g.setColor(Color.GREEN);
@@ -387,15 +407,15 @@ public class GamePanel extends JPanel implements ActionListener {
 			map.setVisible(true);
 
 		} else if (buttonPressed.equals(dark)) {
-			player.location = 1;
-			m.killEmber(player);
+			//player.location = 1;
+			m.orcKiller(player);
 			town.setVisible(false);
 			dark.setVisible(false);
 			goblins.setVisible(false);
 			map.setVisible(true);
 
 		} else if (buttonPressed.equals(goblins)) {
-			player.location = 2;
+			//player.location = 2;
 			m.goblin(player);
 			town.setVisible(false);
 			dark.setVisible(false);
@@ -403,6 +423,26 @@ public class GamePanel extends JPanel implements ActionListener {
 			map.setVisible(true);
 
 		}
+	 else if (buttonPressed.equals(ember)) {
+		 if(player.level>10||player.level==10){
+		//player.location = 1;
+		m.killEmber(player);
+		town.setVisible(false);
+		dark.setVisible(false);
+		goblins.setVisible(false);
+		map.setVisible(true);
+		 }
+	}
+	 else if (buttonPressed.equals(hydra)) {
+		 if(player.level>5||player.level==5){
+		//player.location = 1;
+		m.hydra(player);
+		town.setVisible(false);
+		dark.setVisible(false);
+		goblins.setVisible(false);
+		map.setVisible(true);
+		 }
+	}
 
 		else if (buttonPressed.equals(map)) {
 			currentState = MAP;
@@ -453,15 +493,14 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		repaint();
 		String hp = String.valueOf(player.health);
-		health.setText("health: " + hp);
+	
 		health.setForeground(Color.WHITE);
-		String xP = String.valueOf("Experience: " + player.xp + " Level: "
-				+ player.level);
+		String xP = String.valueOf( player.xp);
 		xp.setText(xP);
-		int exp = Integer.valueOf(xP);
+		int exp = Integer.parseInt(xP);
 		xp.setForeground(Color.WHITE);
 		player.levelup(exp, player);
-
+		health.setText("health: " + hp+ "  experience: "+exp);
 	}
 
 }

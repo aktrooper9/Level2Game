@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	JButton instructions = new JButton("Instructions ");
 	JLabel health = new JLabel();
 	JLabel xp = new JLabel();
-	JButton ember = new JButton(":Locked:");
+	JButton mountains = new JButton(":Locked:");
 	JButton hydra = new JButton(":Locked:");
 
 	String creature;
@@ -62,7 +62,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		goblins.addActionListener(this);
 		heal.addActionListener(this);
 		instructions.addActionListener(this);
-		ember.addActionListener(this);
+		mountains.addActionListener(this);
 		hydra.addActionListener(this);
 
 		// framedraw = new Timer(1000 / 60, this);
@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		add(dark);
 		add(goblins);
 		add(heal);
-		add(ember);
+		add(mountains);
 		add(instructions);
 		add(health);
 		add(xp);
@@ -136,7 +136,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		goblins.setVisible(false);
 		heal.setVisible(false);
 		map.setVisible(false);
-		ember.setVisible(false);
+		mountains.setVisible(false);
 		hydra.setVisible(false);
 
 	}
@@ -167,7 +167,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		quests.setVisible(true);
 		store.setVisible(true);
 		heal.setVisible(true);
-		ember.setVisible(false);
+		mountains.setVisible(false);
 		hydra.setVisible(false);
 		//
 		quests.setLocation(380, 65);
@@ -209,7 +209,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 
-		player.level= 11; //testing
+		//player.level= 30; //testing
 		// System.out.println("map");
 		play.setVisible(false);
 
@@ -222,16 +222,25 @@ public class GamePanel extends JPanel implements ActionListener {
 		heal.setVisible(true);
 		goblins.setVisible(true);
 		goblins.setLocation(170, 140);
-		ember.setVisible(true);
-		ember.setLocation(267, 700);
+		mountains.setVisible(true);
+		mountains.setLocation(267, 700);
 		hydra.setVisible(true);
 		hydra.setLocation(620, 550);
-		if(player.level>5||player.level==5){
+		if(player.level>=10){
+			mountains.setText("The Mountains: Dragons");
 			hydra.setText("The Swamp: Hydra");
 		}
-		else if(player.level>10||player.level==10){
-			ember.setText("The Mountains: Dragons");
+		
+		else if(player.level>=5){
+			hydra.setText("The Swamp: Hydra");
 		}
+		else if(player.level<5){
+			hydra.setText(":Locked:");
+			mountains.setText(":Locked:");
+		}
+		
+		
+		
 		// System.out.println("HI");
 		if (mapImage!=null) {
 			g.drawImage(mapImage, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
@@ -250,6 +259,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		// repaint()
 		JButton buttonPressed = (JButton) e.getSource();
+		
 		if (buttonPressed.equals(play)) {
 			// actions.push("play");
 			// currentState++;
@@ -294,105 +304,15 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		// }
 		if (buttonPressed.equals(store)) {
+			Shop shop = new Shop();
 			// actions.push("Store");
-			int Purchasable = JOptionPane.showOptionDialog(null,
-					"What would you like to buy", "Shop", 0,
-					JOptionPane.INFORMATION_MESSAGE, null, new String[] {
-							"Broad Sword: 5 gold", "Great Club: 6 gold",
-							"Claymore: 6 gold", "Shield: 5 gold",
-							"Armor: Gold", "Food: 1 gold", "Quit" }, null);
-			if (Purchasable == 0) {
-				player.money -= 5;
-				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money",
-							"Shop", JOptionPane.INFORMATION_MESSAGE);
-					player.money += 5;
-				} else {
-					new BroadSword(player);
-					JOptionPane.showMessageDialog(null,
-							"Congratulations on your new Weapon", "Congrats",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-				// System.out.println(player.damage);
-			} else if (Purchasable == 1) {
-				player.money -= 6;
-				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money",
-							"Shop", JOptionPane.INFORMATION_MESSAGE);
-					player.money += 6;
-				} else {
-					new GreatClub(player);
-					JOptionPane.showMessageDialog(null,
-							"Congratulations on your new Weapon", "Congrats",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				}
-				// System.out.println(player.damage);
-			} else if (Purchasable == 2) {
-				player.money -= 6;
-				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money",
-							"Shop", JOptionPane.INFORMATION_MESSAGE);
-					player.money += 6;
-				} else {
-					new Claymore(player);
-					JOptionPane.showMessageDialog(null,
-							"Congratulations on your new Weapon", "Congrats",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				}
-				// System.out.println(player.damage);
-			} else if (Purchasable == 3) {
-				player.money -= 5;
-				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money",
-							"Shop", JOptionPane.INFORMATION_MESSAGE);
-					player.money += 5;
-				} else {
-					new Shield(player);
-					JOptionPane.showMessageDialog(null,
-							"Congratulations on your new shield", "Congrats",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				}
-				// System.out.println(player.damage);
-			} else if (Purchasable == 4) { //
-
-				player.money -= 10;
-				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money",
-							"Shop", JOptionPane.INFORMATION_MESSAGE);
-					player.money += 10;
-				} else {
-					new Armor(player);
-					JOptionPane.showMessageDialog(null,
-							"Congratulations on your new Armor", "Congrats",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				}
+			if(player.emberComplete=true){
+				int sell = JOptionPane.showOptionDialog(null,
+						"Selling or buying "+player.name+" dragonslayer", "Shop", 0,
+						JOptionPane.INFORMATION_MESSAGE, null, new String[] {
+								"Buying","Selling" }, null);
 			}
-			// System.out.println(player.damage);
-			else if (Purchasable == 5) { //
-
-				player.money -= 1;
-				if (player.money <= 0) {
-					JOptionPane.showMessageDialog(null, "Not enough money",
-							"Shop", JOptionPane.INFORMATION_MESSAGE);
-					player.money += 1;
-				} else {
-					player.rations += 1;
-					JOptionPane.showMessageDialog(null,
-							"You have bought one more Ration", "Congrats",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				}
-				// System.out.println(player.damage);
-			} else if (Purchasable == 6) { // Quit
-				// System.out.println(player.damage);
-				actions.pop();
-				currentState += 1;
-				currentState -= 1;
-			}
+			shop.shop(player);
 		}
 		if (buttonPressed.equals(quests)) {
 			c.run(player);
@@ -423,7 +343,7 @@ public class GamePanel extends JPanel implements ActionListener {
 			map.setVisible(true);
 
 		}
-	 else if (buttonPressed.equals(ember)) {
+	 else if (buttonPressed.equals(mountains)) {
 		 if(player.level>10||player.level==10){
 		//player.location = 1;
 		m.killEmber(player);
@@ -431,6 +351,10 @@ public class GamePanel extends JPanel implements ActionListener {
 		dark.setVisible(false);
 		goblins.setVisible(false);
 		map.setVisible(true);
+		 }
+		 else{
+			 JOptionPane.showMessageDialog(null, "You are not high enough level");
+			 
 		 }
 	}
 	 else if (buttonPressed.equals(hydra)) {
@@ -441,6 +365,10 @@ public class GamePanel extends JPanel implements ActionListener {
 		dark.setVisible(false);
 		goblins.setVisible(false);
 		map.setVisible(true);
+		 }
+		 else{
+			 JOptionPane.showMessageDialog(null, "You are not high enough level");
+			 
 		 }
 	}
 

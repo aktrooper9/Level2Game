@@ -26,14 +26,16 @@ boolean goblinComplete = false;
 int xp = 0;
 int level= 0;
 
-void levelup (int xp, GameObject g){
-	if(xp==30+g.level*10){
-		g.level+=1;
-		xp-=30+g.level*10;
-		g.damage+=g.level*10;
-		g.health+=g.level*20;
-		g.prot+=g.level*1;
+void levelup (int xp){
+	if(xp==30+level*10){
+		level+=1;
+		xp-=30+level*10;
+		damage+=level*10;
+		health+=level*200;
+		prot+=level*1;
 	}
+	System.out.println("Level up");
+
 }
 void doDamageEnemy(int damage){
 	System.out.println("Damage "+damage);

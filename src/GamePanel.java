@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	String name;
 	public static BufferedImage townImage;
 	 public static BufferedImage mapImage;
+	 public static BufferedImage menuImage;
+
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 
@@ -42,9 +45,9 @@ public class GamePanel extends JPanel implements ActionListener {
 	JButton heal = new JButton("Heal");
 	JButton instructions = new JButton("Instructions ");
 	JLabel health = new JLabel();
-	JLabel xp = new JLabel();
 	JButton mountains = new JButton(":Locked:");
 	JButton hydra = new JButton(":Locked:");
+	JLabel title = new JLabel("Ember");
 
 	String creature;
 	GameObject player;
@@ -76,11 +79,13 @@ public class GamePanel extends JPanel implements ActionListener {
 		add(heal);
 		add(mountains);
 		add(instructions);
+		add(title);
 		add(health);
-		add(xp);
 		add(hydra);
 			townImage=loadImage("Town.jpg");
 			mapImage=loadImage("Map.png");
+			menuImage=loadImage("Dragon.jpg");
+
 		// framedraw.start();
 
 	}
@@ -124,9 +129,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 
 	void drawMenuState(Graphics g) {
-
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
+	//	g.setColor(Color.BLUE);
+	//	g.fillRect(0, 0, GameRunner.WIDTH, GameRunner.HEIGHT);
 		play.setVisible(true);
 		instructions.setVisible(true);
 		quests.setVisible(false);
@@ -138,7 +142,18 @@ public class GamePanel extends JPanel implements ActionListener {
 		map.setVisible(false);
 		mountains.setVisible(false);
 		hydra.setVisible(false);
+		title.setVisible(true);
+		title.setPreferredSize(new Dimension(250, 100));
+		title.setAlignmentX(400);
+		title.setAlignmentY(400);
 
+		if (townImage!=null) {
+			g.drawImage(menuImage, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
+		} else {
+			System.out.println("noimage");
+			g.setColor(Color.GREEN);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+		}
 	}
 
 	void drawActions(Graphics g) {
@@ -212,6 +227,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		//player.level= 30; //testing
 		// System.out.println("map");
 		play.setVisible(false);
+		//player.level=100;
 
 		quests.setVisible(false);
 		store.setVisible(false);
@@ -311,6 +327,12 @@ public class GamePanel extends JPanel implements ActionListener {
 						"Selling or buying "+player.name+" dragonslayer", "Shop", 0,
 						JOptionPane.INFORMATION_MESSAGE, null, new String[] {
 								"Buying","Selling" }, null);
+				if(sell==0){
+					shop.shop(player);
+				}
+				if(sell==0){
+					shop.sell(player);
+				}
 			}
 			shop.shop(player);
 		}
@@ -408,7 +430,7 @@ public class GamePanel extends JPanel implements ActionListener {
 				player.health += 50;
 				player.rations -= 1;
 				JOptionPane.showMessageDialog(null,
-						"The delicous food is a most welcome guest. You now have "
+						" You now have "
 								+ player.health + " health", "Food",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -420,15 +442,14 @@ public class GamePanel extends JPanel implements ActionListener {
 		}
 
 		repaint();
-		String hp = String.valueOf(player.health);
-	
-		health.setForeground(Color.WHITE);
+
+	if(player!=null){
+		health.setForeground(Color.WHITE );
 		String xP = String.valueOf( player.xp);
-		xp.setText(xP);
 		int exp = Integer.parseInt(xP);
-		xp.setForeground(Color.WHITE);
-		player.levelup(exp, player);
-		health.setText("health: " + hp+ "  experience: "+exp);
+		player.levelup(exp);
+		health.setText("health: " + player.health+ " Level: "+player.level+"  experience: "+exp);
+	}
 	}
 
 }

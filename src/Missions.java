@@ -73,17 +73,12 @@ while (wyvern.alive) {
 			break;
 }
 		if(mercy ==1){
-			if(g.dragonborn==true){
-				JOptionPane
-				.showMessageDialog(null,
-						"Its scales drip with blood as its life fades from the wyverns eyes, its comrades whisper fly high");
-			}
 			JOptionPane
 			.showMessageDialog(null,
-					"Its scales drip with blood as its life fades from the wyverns eyes, its comrades whisper prayers in draconic");
+					"Its scales drip with blood as its life fades from the wyverns eyes, its comrades whisper prayers in draconic to old to understand.");
 	g.alive = false;
 	g.scales+=10;
-	JOptionPane.showMessageDialog(null, "You gained 10 wyvern scalse");
+	JOptionPane.showMessageDialog(null, "You gained 10 wyvern scales");
 	break;
 		}
 		}
@@ -98,10 +93,10 @@ while (wyvern.alive) {
 					JOptionPane
 					.showMessageDialog(null,
 							"As you walk around the great cave, jewels clink beneath your feet\n, warriors rot away there weapons by their sides. \n A great pile"
-							+ "of treasure sits at the center of the cave. ");
+							+ " of treasure sits at the center of the cave. ");
 					JOptionPane
 					.showMessageDialog(null,
-							"A great dragon sits on his hoard watching you. \nIts dark scales glow like embers in the light./n He then roars a spurt of red hot flames challenging you.");
+							"A great dragon sits on his hoard watching you. \nIts dark scales glow like embers in the light.\n He then roars a spurt of red hot flames challenging you.");
 					while (ember.alive) {
 
 						ember.round(g, "Ember");

@@ -98,4 +98,34 @@ void shop(GameObject g){
 	
 }
 }
+void sell(GameObject g){
+	int sell = JOptionPane.showOptionDialog(null,
+			"What do you have", "Shop", 0,
+			JOptionPane.INFORMATION_MESSAGE, null, new String[] {
+					"Dragon scales","Dragon blood", }, null);
+	if(sell==0){
+		String mon = JOptionPane.showInputDialog("How much are you selling");
+		int i = Integer.parseInt(mon);
+		if(i>g.scales){
+		JOptionPane.showMessageDialog(null, "You don't have that much.");
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "I'll pay you "+i*30+" gold");
+		}
+
+	}
+	if(sell==2){
+
+		String mon = JOptionPane.showInputDialog("How much are you selling");
+		int i = Integer.parseInt(mon);
+		if(i>g.scales){
+		JOptionPane.showMessageDialog(null, "You don't have that much.");
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "I'll pay you "+i*10+" gold");
+		}
+
+	
+	}
+}
 }

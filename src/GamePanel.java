@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,8 +48,8 @@ public class GamePanel extends JPanel implements ActionListener {
 	JLabel health = new JLabel();
 	JButton mountains = new JButton(":Locked:");
 	JButton hydra = new JButton(":Locked:");
-	JLabel title = new JLabel("Ember");
-
+	JLabel title = new JLabel("Dragon");
+	Font font = new Font("Arial", Font.PLAIN, 48);
 	String creature;
 	GameObject player;
 	Missions m = new Missions(player);
@@ -87,6 +88,13 @@ public class GamePanel extends JPanel implements ActionListener {
 			menuImage=loadImage("Dragon.jpg");
 
 		// framedraw.start();
+
+	}
+	void setup() {
+		title.setPreferredSize(new Dimension(250, 100));
+		title.setLocation(325, 400);
+		title.setForeground(Color.WHITE);
+		title.setFont(font);
 
 	}
 
@@ -143,9 +151,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		mountains.setVisible(false);
 		hydra.setVisible(false);
 		title.setVisible(true);
-		title.setPreferredSize(new Dimension(250, 100));
-		title.setAlignmentX(400);
-		title.setAlignmentY(400);
+		setup();
 
 		if (townImage!=null) {
 			g.drawImage(menuImage, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
@@ -177,6 +183,10 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 
 	void drawGameState(Graphics g) {
+		title.setVisible(false);
+
+		
+		
 		play.setVisible(false);
 		map.setVisible(true);
 		quests.setVisible(true);
@@ -228,7 +238,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		// System.out.println("map");
 		play.setVisible(false);
 		//player.level=100;
-
+title.setVisible(false);
 		quests.setVisible(false);
 		store.setVisible(false);
 		town.setVisible(true);
@@ -398,28 +408,26 @@ public class GamePanel extends JPanel implements ActionListener {
 			currentState = MAP;
 
 		} else if (buttonPressed.equals(instructions)) {
-			System.out.println("Instructions");
+			JOptionPane.showMessageDialog(null, "Click start to begin. \n You will first make your character."
+					+ "\n Go to the map to travel to different places.\n You may buy items from the shop for gold."
+					+ "\n You can get gold by completing the Missions stated at the quests."
+					+ "\n Fight Monsters by going to the locations on the map"
+					+ "\n You have two attacks; A small hit which alwasy hits, A big hit which only hits half the time."
+					+ "\n Spare them for gold, or kill them to gain Experience"
+					+ "\n Your health level and experience are shown on the top of the frame");
+		
+	/*
 			int instruct = JOptionPane.showOptionDialog(null, "Instructions",
 					"Which would you like to learn about, ", 0,
 					JOptionPane.INFORMATION_MESSAGE, null, new String[] {
-							"Moving", "Combat", }, null);
-			if (instruct == 0) {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"Click on the store to buy items. \nClick on the quests to see possible jobs.  "
-										+ "\nClick on the map to find all the places you need to go",
-								"Intro", JOptionPane.INFORMATION_MESSAGE);
-			}
-			if (instruct == 1) {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"When in fights you may use a basic attack which will always hit "
-										+ "/nor a big attack which has a 50% chance of striking. /nYou may also choose to heal your character with rations, however you will lose the chance to strike.",
-								"Intro", JOptionPane.INFORMATION_MESSAGE);
-			}
-
+							"Basics", }, null);
+if(instruct==0) {
+	
+}
+if(instruct==1) {
+	
+}
+*/
 		}
 
 		else if (buttonPressed.equals(heal)) {

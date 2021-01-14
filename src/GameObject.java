@@ -1,12 +1,14 @@
 import javax.swing.JOptionPane;
-
+// make goal.
 
  // add tutorial add death confusing. add more information.
 
 
 
 public class GameObject  {
+	int score;  
 int damage;
+int maxhealth;
 int prot;
 int value;
 int location = 0;
@@ -38,22 +40,26 @@ void levelup (int xp){
 
 }
 void doDamageEnemy(int damage){
-	System.out.println("Damage "+damage);
-	this.health-=damage;
+	System.out.println("Damage taken "+damage);
+changeHealth(damage);
+}
+
+void changeHealth(int change) {
+	health-=change;
 if(health<=0){
 		
 		alive=false;
 }
 }
 
+
+
 void doDamage(int damage){
-	System.out.println("Damage "+damage);
-	this.health-=damage;
-	if(health<=0){
+	System.out.println("Damage "+damage);	
 		
-		JOptionPane.showMessageDialog(null,"You died.");
-		alive=false;
-	}
+changeHealth(damage);
+	
+	
 }
 void tutorial(GameObject g){}
 }

@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	public static BufferedImage townImage;
 	 public static BufferedImage mapImage;
 	 public static BufferedImage menuImage;
+	 public static BufferedImage endImage;
 
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
@@ -48,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	JLabel health = new JLabel();
 	JButton mountains = new JButton(":Locked:");
 	JButton hydra = new JButton(":Locked:");
-	JLabel title = new JLabel("Dragon");
+	JLabel title = new JLabel("Kill a Dragon");
 	Font font = new Font("Arial", Font.PLAIN, 48);
 	String creature;
 	GameObject player;
@@ -86,12 +87,14 @@ public class GamePanel extends JPanel implements ActionListener {
 			townImage=loadImage("Town.jpg");
 			mapImage=loadImage("Map.png");
 			menuImage=loadImage("Dragon.jpg");
+			endImage=loadImage("Youdied.jpg");
+
 
 		// framedraw.start();
 
 	}
 	void setup() {
-		title.setPreferredSize(new Dimension(250, 100));
+		title.setPreferredSize(new Dimension(800, 100));
 		title.setLocation(325, 400);
 		title.setForeground(Color.WHITE);
 		title.setFont(font);
@@ -226,8 +229,30 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 
 	void drawEndState(Graphics g) {
-		// System.out.println("end");
+		play.setVisible(true);
+		instructions.setVisible(true);
+		quests.setVisible(false);
+		store.setVisible(false);
+		town.setVisible(false);
+		dark.setVisible(false);
+		goblins.setVisible(false);
+		heal.setVisible(false);
+		map.setVisible(false);
+		mountains.setVisible(false);
+		hydra.setVisible(false);
+		health.setForeground(Color.RED );
+		font = new Font("Arial", Font.PLAIN, 90);
+		health.setText("Your final score was "+player.score);
 
+		
+		System.out.println("end");
+		if (townImage!=null) {
+			g.drawImage(endImage, 0, 0, GameRunner.WIDTH, GameRunner.HEIGHT, null);
+		} else {
+			System.out.println("noimage");
+			g.setColor(Color.GREEN);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+		}
 	}
 
 	void drawMapState(Graphics g) {
@@ -280,6 +305,7 @@ title.setVisible(false);
 
 	}
 
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -287,6 +313,7 @@ title.setVisible(false);
 		JButton buttonPressed = (JButton) e.getSource();
 		
 		if (buttonPressed.equals(play)) {
+			m.ember();
 			// actions.push("play");
 			// currentState++;
 			// boolean success = false;
@@ -317,22 +344,28 @@ title.setVisible(false);
 						+ " does not compute");
 
 			}
-			JOptionPane.showMessageDialog(null, "Your stats are \nDamage: "
-					+ player.damage + "\nArmor: " + player.prot + " \nhealth: "
-					+ player.health, "Stats", JOptionPane.INFORMATION_MESSAGE);
-			player.name = JOptionPane.showInputDialog("Choose your name");
-			JOptionPane.showMessageDialog(null, "You are " + player.name
-					+ " of the " + creature);
-			currentState = GAME;
+			if(player!=null) {
+				JOptionPane.showMessageDialog(null, "Your stats are \nDamage: "
+						+ player.damage + "\nArmor: " + player.prot + " \nhealth: "
+						+ player.health, "Stats", JOptionPane.INFORMATION_MESSAGE);
+				player.name = JOptionPane.showInputDialog("Choose your name");
+				JOptionPane.showMessageDialog(null, "You are " + player.name
+						+ " of the " + creature);
+				currentState = GAME;
 
-			player.rations += 20;
+				player.rations += 20;
+			}
+			
 		}
-
+		else if(!player.alive) {
+			currentState=END;
+		}
 		// }
 		if (buttonPressed.equals(store)) {
 			Shop shop = new Shop();
+			
 			// actions.push("Store");
-			if(player.emberComplete=true){
+			if(player.emberComplete){
 				int sell = JOptionPane.showOptionDialog(null,
 						"Selling or buying "+player.name+" dragonslayer", "Shop", 0,
 						JOptionPane.INFORMATION_MESSAGE, null, new String[] {
@@ -340,17 +373,20 @@ title.setVisible(false);
 				if(sell==0){
 					shop.shop(player);
 				}
-				if(sell==0){
+				if(sell==1){
 					shop.sell(player);
 				}
 			}
+			else{
 			shop.shop(player);
-		}
+			}
+			}
 		if (buttonPressed.equals(quests)) {
 			c.run(player);
 		}
 
 		if (buttonPressed.equals(town)) {
+			System.out.println("Town");
 			player.location = 0;
 			currentState = GAME;
 			town.setVisible(false);
@@ -408,13 +444,14 @@ title.setVisible(false);
 			currentState = MAP;
 
 		} else if (buttonPressed.equals(instructions)) {
-			JOptionPane.showMessageDialog(null, "Click start to begin. \n You will first make your character."
+			JOptionPane.showMessageDialog(null, "Click play to begin. \n You will first make your character."
 					+ "\n Go to the map to travel to different places.\n You may buy items from the shop for gold."
 					+ "\n You can get gold by completing the Missions stated at the quests."
 					+ "\n Fight Monsters by going to the locations on the map"
 					+ "\n You have two attacks; A small hit which alwasy hits, A big hit which only hits half the time."
 					+ "\n Spare them for gold, or kill them to gain Experience"
-					+ "\n Your health level and experience are shown on the top of the frame");
+					+ "\n Your health level and experience are shown on the top of the frame"
+					+ "\n Try to get t,he highest score possible", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 		
 	/*
 			int instruct = JOptionPane.showOptionDialog(null, "Instructions",
@@ -435,28 +472,39 @@ if(instruct==1) {
 			if (player.rations <= 0) {
 				JOptionPane.showMessageDialog(null, "No food left");
 			} else {
-				player.health += 50;
+				player.changeHealth(-50);
 				player.rations -= 1;
+				if(player.health>player.maxhealth) {
+					player.health=player.maxhealth;
+				}
 				JOptionPane.showMessageDialog(null,
 						" You now have "
 								+ player.health + " health", "Food",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-
-		} else if (!player.alive) {
+		
+			
+		} else if (currentState==END) {
+		//	System.out.println("ELSE");
+			
 			JOptionPane.showMessageDialog(null, "You lose", "lose",
 					JOptionPane.INFORMATION_MESSAGE);
-			currentState = 0;
+			
 		}
-
+		
 		repaint();
 
 	if(player!=null){
+		font = new Font("Arial", Font.PLAIN, 48);
+		if(currentState>1&&currentState<4) {
+	//	int score = player.score;
 		health.setForeground(Color.WHITE );
 		String xP = String.valueOf( player.xp);
 		int exp = Integer.parseInt(xP);
 		player.levelup(exp);
-		health.setText("health: " + player.health+ " Level: "+player.level+"  experience: "+exp);
+		health.setText("health: " + player.health+ " Level: "+player.level+"  experience: "+exp+" Score: "+player.score +" Gold: "+player.money);
+	}
+		
 	}
 	}
 

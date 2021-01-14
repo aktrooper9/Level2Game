@@ -1,10 +1,10 @@
 import javax.swing.JOptionPane;
-
+// fix shop make money visible, and fix
 
 public class Shop extends GameObject {
 void shop(GameObject g){
 	int Purchasable = JOptionPane.showOptionDialog(null,
-			"What would you like to buy", "Shop", 0,
+			"What would you like to buy  Money: "+g.money, "Shop", 0,
 			JOptionPane.INFORMATION_MESSAGE, null, new String[] {
 					"Broad Sword: 5 gold", "Great Club: 6 gold",
 					"Claymore: 6 gold", "Shield: 5 gold",
@@ -95,7 +95,7 @@ void shop(GameObject g){
 
 		}
 		// System.out.println(player.damage);
-	
+	//sdad
 }
 }
 void sell(GameObject g){
@@ -111,10 +111,13 @@ void sell(GameObject g){
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "I'll pay you "+i*30+" gold");
+			g.scales-=i;
+			int gold =i*30;
+			g.money+=gold;
 		}
 
 	}
-	if(sell==2){
+	if(sell==1){
 
 		String mon = JOptionPane.showInputDialog("How much are you selling");
 		int i = Integer.parseInt(mon);
@@ -122,7 +125,10 @@ void sell(GameObject g){
 		JOptionPane.showMessageDialog(null, "You don't have that much.");
 		}
 		else{
-			JOptionPane.showMessageDialog(null, "I'll pay you "+i*10+" gold");
+			JOptionPane.showMessageDialog(null, "I'll pay you "+i*50+" gold");
+			g.blood-=i;
+			int gold =i*150;
+			g.money+=gold;
 		}
 
 	

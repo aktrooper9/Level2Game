@@ -8,6 +8,11 @@ Orc(){
 	 prot = ran.nextInt(10)+5;
 
 	 health = ran.nextInt(600)+200;
-
+	 maxhealth=health;
+	 score=0;
+	 emberComplete= false;
+	  orcComplete= false;
+	 hydraComplete = false;
+	 goblinComplete = false;
 }
 }
